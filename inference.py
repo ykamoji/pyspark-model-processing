@@ -1,27 +1,12 @@
 from pyspark.sql import SparkSession
 from transformers import ViTForImageClassification, ViTImageProcessor
-import pickle
+from utils import createDataSet
 import torch
 import time
 import numpy as np
 
 dataset_path = '/Users/ykamoji/Documents/ImageDatabase/cifar-10-batches-py/'
 pipeline_path = '/pipeline'
-
-def createDataSet():
-    train_dataset = []
-    test_dataset = []
-    for i in range(1, 2):
-        data = pickle.load(open(dataset_path + f'data_batch_{i}', 'rb'), encoding='latin-1')
-        train_dataset.extend(zip(data["data"], data["labels"]))
-
-    test_data = pickle.load(open(dataset_path + f'test_batch', 'rb'), encoding='latin-1')
-    test_dataset.extend(zip(test_data["data"], test_data["labels"]))
-
-    meta = pickle.load(open(dataset_path + f'batches.meta', 'rb'), encoding='latin-1')
-    label_map = {index: label for index, label in enumerate(meta['label_names'])}
-
-    return train_dataset, test_dataset, label_map
 
 def startApp():
     spark = SparkSession.builder. \
@@ -31,7 +16,7 @@ def startApp():
         config("spark.driver.memory", "16G"). \
         getOrCreate()
 
-    train_dataset, test_dataset, label_map = createDataSet()
+    train_dataset, test_dataset, label_map = createDataSet(dataset_path)
 
     processor = ViTImageProcessor.from_pretrained('aaraki/vit-base-patch16-224-in21k-finetuned-cifar10',
                                                   cache_dir='models/')
