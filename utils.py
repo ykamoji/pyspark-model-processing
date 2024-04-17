@@ -1,5 +1,14 @@
 import pickle
-import torch
+from pyspark.sql.types import StructType, IntegerType, StructField, TimestampType
+from pyspark.sql.functions import col
+
+schema = StructType([
+        StructField("batch_id",IntegerType(), False),
+        StructField("triggered",TimestampType(), False),
+        StructField("start", TimestampType()),
+        StructField("end", TimestampType()),
+])
+
 
 def createDataSet(dataset_path):
     train_dataset = []
@@ -26,3 +35,6 @@ def collate_fn(images, labels):
         'pixel_values': images['pixel_values'],
         'labels': labels
     }
+
+def select_cast(column):
+    return col(column).cast(TimestampType())
