@@ -1,5 +1,5 @@
 import pickle
-
+import torch
 
 def createDataSet(dataset_path):
     train_dataset = []
@@ -19,3 +19,10 @@ def createDataSet(dataset_path):
 def get_label_map(dataset_path):
     meta = pickle.load(open(dataset_path + f'batches.meta', 'rb'), encoding='latin-1')
     return {index: label for index, label in enumerate(meta['label_names'])}
+
+
+def collate_fn(images, labels):
+    return {
+        'pixel_values': images['pixel_values'],
+        'labels': labels
+    }
