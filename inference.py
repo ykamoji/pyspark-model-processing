@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 
 dataset_path = '/Users/ykamoji/Documents/ImageDatabase/cifar-10-batches-py/'
 
-def startApp():
+def startInference():
 
     train_dataset, test_dataset, label_map = createDataSet(dataset_path)
 
@@ -83,4 +83,4 @@ def startApp():
 
 
 if __name__ == "__main__":
-    startApp()
+    startInference()

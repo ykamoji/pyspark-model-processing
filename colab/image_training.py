@@ -104,9 +104,6 @@ def startTraining(distributed_training=False):
     fine_tune_args = get_fine_tuning_trainer_args("../results/")
 
     def trainer():
-        import torch.distributed
-        torch.distributed.init_process_group(backend="nccl")
-
         fine_tune_trainer = Trainer(
             model=pretrained_model,
             args=fine_tune_args,
@@ -127,11 +124,10 @@ def startTraining(distributed_training=False):
         fine_tune_trainer.log_metrics("eval", metrics)
         fine_tune_trainer.save_metrics("eval", metrics)
 
-        torch.distributed.destroy_process_group()
-
         return train_results
 
     if distributed_training:
+        import torch.distributed
         spark = SparkSession.builder. \
             appName("ImageClassification"). \
             master("local[*]"). \
@@ -143,7 +139,9 @@ def startTraining(distributed_training=False):
             config("spark.executor.resource.gpu.discoveryScript", os.getcwd() + "/discovery.sh"). \
             config("spark.driver.resource.gpu.discoveryScript", os.getcwd() + "/discovery.sh"). \
             getOrCreate()
+        torch.distributed.init_process_group(backend="nccl")
         results = TorchDistributor(local_mode=True, use_gpu=False).run(trainer)
+        torch.distributed.destroy_process_group()
         spark.stop()
 
     else:

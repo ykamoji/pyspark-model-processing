@@ -13,7 +13,7 @@ schema = StructType([
 def createDataSet(dataset_path):
     train_dataset = []
     test_dataset = []
-    for i in range(1, 2):
+    for i in range(1, 6):
         data = pickle.load(open(dataset_path + f'data_batch_{i}', 'rb'), encoding='latin-1')
         train_dataset.extend(zip(data["data"], data["labels"]))
 
