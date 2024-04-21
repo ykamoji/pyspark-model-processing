@@ -33,19 +33,17 @@ vit_model_list = [
     "facebook/deit-base-distilled-patch16-224"
 ]
 
-model_name = vit_model_list[2]
-
 def get_fine_tuning_trainer_args(output_path):
 
     return TrainingArguments(
         output_dir=output_path + 'training/',
         logging_dir=output_path + 'logs/',
-        per_device_train_batch_size=10,
-        per_device_eval_batch_size=10,
+        per_device_train_batch_size=32,
+        per_device_eval_batch_size=32,
         evaluation_strategy="steps",
         num_train_epochs=1,
-        save_steps=20,
-        eval_steps=20,
+        save_steps=40,
+        eval_steps=40,
         logging_steps=10,
         learning_rate=0.01,
         warmup_ratio=0.1,
@@ -83,11 +81,11 @@ def collate_fn(batch):
     }
 
 
-def startTraining(distributed_training=False):
-    train_dataset = load_dataset('cifar10', split=f"train[:10]", verification_mode='no_checks',
+def startTraining(model_name, distributed_training=False):
+    train_dataset = load_dataset('cifar10', split=f"train[:15%]", verification_mode='no_checks',
                                  cache_dir=dataset_path)
 
-    test_dataset = load_dataset('cifar10', split=f"test[:10]", verification_mode='no_checks',
+    test_dataset = load_dataset('cifar10', split=f"test[:100%]", verification_mode='no_checks',
                                 cache_dir=dataset_path)
 
     pretrained_model = AutoModelForImageClassification.from_pretrained(model_name, cache_dir='../models/')
@@ -149,4 +147,4 @@ def startTraining(distributed_training=False):
 
 
 if __name__ == "__main__":
-    startTraining(True)
+    startTraining(conv_model_list[0], False)
