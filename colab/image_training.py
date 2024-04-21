@@ -29,23 +29,26 @@ vit_model_list = [
     "facebook/deit-tiny-patch16-224",
     "facebook/deit-small-patch16-224",
     "facebook/deit-base-patch16-224",
-    "facebook/deit-tiny-distilled-patch16-224"
+    "facebook/deit-tiny-distilled-patch16-224",
     "facebook/deit-base-distilled-patch16-224"
 ]
+
+
+IGNORE_KEYS = ['cls_logits', 'distillation_logits', 'hidden_states', 'attentions']
 
 def get_fine_tuning_trainer_args(output_path):
 
     return TrainingArguments(
-        output_dir=output_path + 'training/',
-        logging_dir=output_path + 'logs/',
+        output_dir=output_path + '/training/',
+        logging_dir=output_path + '/logs/',
         per_device_train_batch_size=32,
         per_device_eval_batch_size=32,
         evaluation_strategy="steps",
         num_train_epochs=1,
-        save_steps=20,
-        eval_steps=20,
+        save_steps=40,
+        eval_steps=40,
         logging_steps=10,
-        learning_rate=0.01,
+        learning_rate=5.e-05,
         warmup_ratio=0.1,
         warmup_steps=1,
         weight_decay=0,
@@ -91,11 +94,11 @@ def collate_fn(batch):
 
 
 def startTraining(model_name, distributed_training=False):
-    train_dataset = load_dataset('cifar10', split=f"train[:15%]", verification_mode='no_checks',
-                                 cache_dir=dataset_path)
+    train_dataset = load_dataset('cifar10', split=f"train[:25%]", verification_mode='no_checks',
+                                 cache_dir=dataset_path+'/train')
 
-    test_dataset = load_dataset('cifar10', split=f"test[:15%]", verification_mode='no_checks',
-                                cache_dir=dataset_path)
+    test_dataset = load_dataset('cifar10', split=f"test[:100%]", verification_mode='no_checks',
+                                cache_dir=dataset_path+'/test')
 
     pretrained_model = AutoModelForImageClassification.from_pretrained(model_name, cache_dir='../models/')
 
@@ -108,7 +111,7 @@ def startTraining(model_name, distributed_training=False):
         inputs['label'] = batchImage['label']
         return inputs
 
-    fine_tune_args = get_fine_tuning_trainer_args("../results/")
+    fine_tune_args = get_fine_tuning_trainer_args(f"../results/{model_name}")
 
     def trainer():
         fine_tune_trainer = Trainer(
@@ -120,14 +123,14 @@ def startTraining(model_name, distributed_training=False):
             eval_dataset=test_dataset.with_transform(preprocess),
         )
         print(f"Starting...")
-        train_results = fine_tune_trainer.train()
+        train_results = fine_tune_trainer.train(ignore_keys_for_eval=IGNORE_KEYS)
 
-        fine_tune_trainer.save_model(output_dir='../results/models')
+        fine_tune_trainer.save_model(output_dir=f'../results/{model_name}/models')
 
         fine_tune_trainer.log_metrics("train", train_results.metrics)
         fine_tune_trainer.save_state()
 
-        metrics = fine_tune_trainer.evaluate(test_dataset.with_transform(preprocess))
+        metrics = fine_tune_trainer.evaluate(test_dataset.with_transform(preprocess), ignore_keys=IGNORE_KEYS)
         fine_tune_trainer.log_metrics("eval", metrics)
         fine_tune_trainer.save_metrics("eval", metrics)
 
@@ -156,4 +159,4 @@ def startTraining(model_name, distributed_training=False):
 
 
 if __name__ == "__main__":
-    startTraining(conv_model_list[0], False)
+    startTraining(vit_model_list[6], False)
