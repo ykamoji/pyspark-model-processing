@@ -128,6 +128,7 @@ def startTraining(model_name, distributed_training=False):
         fine_tune_trainer.save_model(output_dir=f'../results/{model_name}/models')
 
         fine_tune_trainer.log_metrics("train", train_results.metrics)
+        fine_tune_trainer.save_metrics("train", train_results.metrics)
         fine_tune_trainer.save_state()
 
         metrics = fine_tune_trainer.evaluate(test_dataset.with_transform(preprocess), ignore_keys=IGNORE_KEYS)
@@ -159,4 +160,4 @@ def startTraining(model_name, distributed_training=False):
 
 
 if __name__ == "__main__":
-    startTraining(vit_model_list[6], False)
+    startTraining(vit_model_list[2], False)
