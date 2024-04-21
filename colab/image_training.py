@@ -42,8 +42,8 @@ def get_fine_tuning_trainer_args(output_path):
         per_device_eval_batch_size=32,
         evaluation_strategy="steps",
         num_train_epochs=1,
-        save_steps=40,
-        eval_steps=40,
+        save_steps=20,
+        eval_steps=20,
         logging_steps=10,
         learning_rate=0.01,
         warmup_ratio=0.1,
@@ -62,15 +62,24 @@ def get_fine_tuning_trainer_args(output_path):
 
 def build_metrics():
 
-    _ = evaluate.load("accuracy", cache_dir="../metrics/", trust_remote_code=True)
+    metric_combined = ["accuracy", "precision", "recall", "f1"]
+    metric_collector = []
 
-    metric = evaluate.combine(["accuracy"])
+    for evals in metric_combined:
+        metric_collector.append(evaluate.load(evals, cache_dir="../metrics/", trust_remote_code=True))
 
     def compute_metrics(p):
-        return metric.compute(
-            predictions=np.argmax(p.predictions, axis=1),
-            references=p.label_ids
-        )
+
+        predictions = np.argmax(p.predictions, axis=1)
+        references = p.label_ids
+        calc = []
+        for index, metr in enumerate(metric_collector):
+            if index == 0:
+                calc.append(metr.compute(predictions=predictions, references=references)[metric_combined[index]])
+            else:
+                calc.append(metr.compute(predictions=predictions, references=references, average="weighted")[metric_combined[index]])
+
+        return {'accuracy': calc[0], "precision": calc[1], "recall": calc[2], "f1": calc[3]}
 
     return compute_metrics
 
@@ -85,7 +94,7 @@ def startTraining(model_name, distributed_training=False):
     train_dataset = load_dataset('cifar10', split=f"train[:15%]", verification_mode='no_checks',
                                  cache_dir=dataset_path)
 
-    test_dataset = load_dataset('cifar10', split=f"test[:100%]", verification_mode='no_checks',
+    test_dataset = load_dataset('cifar10', split=f"test[:15%]", verification_mode='no_checks',
                                 cache_dir=dataset_path)
 
     pretrained_model = AutoModelForImageClassification.from_pretrained(model_name, cache_dir='../models/')
@@ -113,7 +122,7 @@ def startTraining(model_name, distributed_training=False):
         print(f"Starting...")
         train_results = fine_tune_trainer.train()
 
-        fine_tune_trainer.save_model(output_dir='results/models')
+        fine_tune_trainer.save_model(output_dir='../results/models')
 
         fine_tune_trainer.log_metrics("train", train_results.metrics)
         fine_tune_trainer.save_state()
