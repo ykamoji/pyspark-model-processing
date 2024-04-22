@@ -32,6 +32,8 @@ def startInference(spark, model_name, device, total_images, batch_size):
     device = torch.device(device)
     model.to(device)
 
+    broadcasted_model = spark.sparkContext.broadcast(model)
+
     def preprocessImage(record):
         images, labels = record[0], record[1]
         height = 32
@@ -53,7 +55,7 @@ def startInference(spark, model_name, device, total_images, batch_size):
         gts.to(device)
         input = collate_fn(input, gts)
         start = time.time()
-        output = model(**input)
+        output = broadcasted_model.value(**input)
         end = time.time()
         # print(output)
         logits = output.logits.cpu()
