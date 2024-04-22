@@ -159,5 +159,19 @@ def startTraining(model_name, distributed_training=False):
         trainer()
 
 
+def count_parameters(model):
+    pretrained_model = AutoModelForImageClassification.from_pretrained(model, cache_dir='../models/')
+    params = pretrained_model.num_parameters()
+    size = 0
+    for param in pretrained_model.parameters():
+        size += param.nelement() * param.element_size()
+
+    return params, size
+
+
 if __name__ == "__main__":
     startTraining(vit_model_list[2], False)
+    # for model in conv_model_list + vit_model_list:
+    #     params, size = count_parameters(model)
+    #     print(f"{model} : Params:{params/1000**2:.3f} , Size:{size/1024**2:.3f}")
+
