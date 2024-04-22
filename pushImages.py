@@ -5,7 +5,7 @@ import random
 import time
 import json
 from pyspark.sql import SparkSession
-from utils import createDataSet, schema
+from utils import createDataSet, streaming_schema
 
 dataset_path = '/Users/ykamoji/Documents/ImageDatabase/cifar-10-batches-py/'
 output_path = 'streams/input/'
@@ -39,7 +39,7 @@ def log(batch_id):
         config("spark.driver.memory", "16G"). \
         getOrCreate()
 
-    new_df = spark.createDataFrame([(batch_id, time.time(), 0.0, 0.0)], col_labels, schema)
+    new_df = spark.createDataFrame([(batch_id, time.time(), 0.0, 0.0)], col_labels, streaming_schema)
     if not os.path.exists(tracker_path):
         new_df.toPandas().to_json(tracker_path, orient='records', force_ascii=False, lines=True)
     else:

@@ -1,40 +1,19 @@
-import torch
 import os
+import evaluate
 import numpy as np
+import torch
+from datasets import load_dataset
 from pyspark.ml.torch.distributor import TorchDistributor
 from pyspark.sql import SparkSession
+from transformers import AutoImageProcessor, AutoModelForImageClassification
 from transformers import Trainer, TrainingArguments
 from transformers.training_args import OptimizerNames
-from datasets import load_dataset
-import evaluate
-from transformers import AutoImageProcessor, AutoModelForImageClassification
+from ..utils import vit_model_list, conv_model_list
 
 dataset_path = os.getcwd() + '/dataset'
 
-conv_model_list = [
-    "facebook/convnext-tiny-224",
-    "facebook/convnext-small-224",
-    "facebook/convnext-base-224",
-    "facebook/convnext-large-224",
-    "facebook/convnextv2-nano-22k-224",
-    "facebook/convnextv2-tiny-22k-224",
-    "facebook/convnextv2-base-22k-224",
-    "facebook/convnextv2-large-22k-224",
-    "facebook/convnextv2-huge-1k-224"
-]
-
-vit_model_list = [
-    "google/vit-base-patch16-224",
-    "google/vit-large-patch16-224",
-    "facebook/deit-tiny-patch16-224",
-    "facebook/deit-small-patch16-224",
-    "facebook/deit-base-patch16-224",
-    "facebook/deit-tiny-distilled-patch16-224",
-    "facebook/deit-base-distilled-patch16-224"
-]
-
-
 IGNORE_KEYS = ['cls_logits', 'distillation_logits', 'hidden_states', 'attentions']
+
 
 def get_fine_tuning_trainer_args(output_path):
 

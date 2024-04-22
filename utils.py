@@ -2,7 +2,29 @@ import pickle
 from pyspark.sql.types import StructType, IntegerType, StructField, TimestampType
 from pyspark.sql.functions import col
 
-schema = StructType([
+conv_model_list = [
+    "facebook/convnext-tiny-224",
+    "facebook/convnext-small-224",
+    "facebook/convnext-base-224",
+    "facebook/convnext-large-224",
+    "facebook/convnextv2-nano-22k-224",
+    "facebook/convnextv2-tiny-22k-224",
+    "facebook/convnextv2-base-22k-224",
+    "facebook/convnextv2-large-22k-224",
+    "facebook/convnextv2-huge-1k-224"
+]
+
+vit_model_list = [
+    "google/vit-base-patch16-224",
+    "google/vit-large-patch16-224",
+    "facebook/deit-tiny-patch16-224",
+    "facebook/deit-small-patch16-224",
+    "facebook/deit-base-patch16-224",
+    "facebook/deit-tiny-distilled-patch16-224",
+    "facebook/deit-base-distilled-patch16-224"
+]
+
+streaming_schema = StructType([
         StructField("batch_id",IntegerType(), False),
         StructField("triggered",TimestampType(), False),
         StructField("start", TimestampType()),
