@@ -52,7 +52,6 @@ def startInference(spark, model_name, device, total_images, batch_size):
         images = record[0]
         input = processor(images=images, return_tensors="pt")
         input = input.to(device)
-        gts.to(device)
         input = collate_fn(input, gts)
         start = time.time()
         output = broadcasted_model.value(**input)
@@ -108,14 +107,26 @@ def startInference(spark, model_name, device, total_images, batch_size):
 
 inference_params = {
     "aaraki/vit-base-patch16-224-in21k-finetuned-cifar10":[
-            {"total_images": 100, "batch_size": 5},
-            {"total_images": 100, "batch_size": 10},
-            {"total_images": 100, "batch_size": 25},
-            {"total_images": 100, "batch_size": 40},
-            {"total_images": 100, "batch_size": 50},
-    ]
-    # "tzhao3/DeiT-CIFAR10":[]
-    # "ahsanjavid/convnext-tiny-finetuned-cifar10":[]
+            {"total_images": 20, "batch_size": 1},
+            {"total_images": 20, "batch_size": 2},
+            {"total_images": 20, "batch_size": 5},
+            {"total_images": 20, "batch_size": 10},
+            {"total_images": 20, "batch_size": 20},
+    ],
+    "tzhao3/DeiT-CIFAR10":[
+        {"total_images": 20, "batch_size": 1},
+            {"total_images": 20, "batch_size": 2},
+            {"total_images": 20, "batch_size": 5},
+            {"total_images": 20, "batch_size": 10},
+            {"total_images": 20, "batch_size": 20}
+    ],
+    "ahsanjavid/convnext-tiny-finetuned-cifar10":[
+            {"total_images": 20, "batch_size": 1},
+            {"total_images": 20, "batch_size": 2},
+            {"total_images": 20, "batch_size": 5},
+            {"total_images": 20, "batch_size": 10},
+            {"total_images": 20, "batch_size": 20},
+        ]
 }
 
 if __name__ == "__main__":
@@ -138,7 +149,9 @@ if __name__ == "__main__":
             else:
                 dfs = dfs.union(df)
 
-    dfs.withColumn("env", lit(device)).show(truncate=False)
+    dfs = dfs.withColumn("env", lit(device))
+
+    dfs.show(truncate=False)
 
     dfs.toPandas().to_csv("results/inference_results.csv")
 
