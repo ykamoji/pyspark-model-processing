@@ -114,7 +114,7 @@ inference_params = {
             {"total_images": 20, "batch_size": 20},
     ],
     "tzhao3/DeiT-CIFAR10":[
-        {"total_images": 20, "batch_size": 1},
+            {"total_images": 20, "batch_size": 1},
             {"total_images": 20, "batch_size": 2},
             {"total_images": 20, "batch_size": 5},
             {"total_images": 20, "batch_size": 10},
@@ -149,7 +149,7 @@ if __name__ == "__main__":
             else:
                 dfs = dfs.union(df)
 
-    dfs = dfs.withColumn("env", lit(device))
+    dfs = dfs.withColumn("env", lit('mac_'+device))
 
     dfs.show(truncate=False)
 
