@@ -1,6 +1,0 @@
-,model,duration,total_images,batch_size,average_batch_duration,balanced_accuracy
-0,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,11.381,100,5,2.14508,97.424
-1,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,13.205,100,10,6.49212,97.424
-2,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,13.842,100,25,11.93674,97.424
-3,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,18.357,100,40,15.19268,97.424
-4,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,23.56,100,50,22.03737,97.424

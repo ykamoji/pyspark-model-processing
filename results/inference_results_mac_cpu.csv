@@ -1,0 +1,16 @@
+,model,duration,total_images,batch_size,average_batch_duration,balanced_accuracy,env
+0,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,4.874,20,1,0.44777,100.0,mac_cpu
+1,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,4.215,20,2,1.26507,100.0,mac_cpu
+2,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,4.104,20,5,2.24346,100.0,mac_cpu
+3,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,6.479,20,10,4.32488,100.0,mac_cpu
+4,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,10.766,20,20,8.2638,100.0,mac_cpu
+5,tzhao3/DeiT-CIFAR10,3.585,20,1,0.51178,100.0,mac_cpu
+6,tzhao3/DeiT-CIFAR10,4.093,20,2,1.04032,100.0,mac_cpu
+7,tzhao3/DeiT-CIFAR10,5.218,20,5,2.3481,100.0,mac_cpu
+8,tzhao3/DeiT-CIFAR10,6.791,20,10,4.29179,100.0,mac_cpu
+9,tzhao3/DeiT-CIFAR10,10.872,20,20,8.74978,100.0,mac_cpu
+10,ahsanjavid/convnext-tiny-finetuned-cifar10,1.451,20,1,0.22278,100.0,mac_cpu
+11,ahsanjavid/convnext-tiny-finetuned-cifar10,1.52,20,2,0.46445,100.0,mac_cpu
+12,ahsanjavid/convnext-tiny-finetuned-cifar10,1.671,20,5,1.04375,100.0,mac_cpu
+13,ahsanjavid/convnext-tiny-finetuned-cifar10,2.597,20,10,2.00784,100.0,mac_cpu
+14,ahsanjavid/convnext-tiny-finetuned-cifar10,3.649,20,20,3.01374,100.0,mac_cpu

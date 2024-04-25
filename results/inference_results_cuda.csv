@@ -1,0 +1,16 @@
+,model,duration,total_images,batch_size,average_batch_duration,balanced_accuracy,env
+0,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,22.434,20,1,0.14428,100.0,cuda
+1,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,11.578,20,2,0.05363,100.0,cuda
+2,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,6.365,20,5,0.09114,100.0,cuda
+3,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,6.761,20,10,0.13074,100.0,cuda
+4,aaraki/vit-base-patch16-224-in21k-finetuned-cifar10,6.213,20,20,0.25195,100.0,cuda
+5,tzhao3/DeiT-CIFAR10,17.428,20,1,0.07341,100.0,cuda
+6,tzhao3/DeiT-CIFAR10,5.784,20,2,0.05868,100.0,cuda
+7,tzhao3/DeiT-CIFAR10,7.094,20,5,0.09521,100.0,cuda
+8,tzhao3/DeiT-CIFAR10,7.483,20,10,0.13205,100.0,cuda
+9,tzhao3/DeiT-CIFAR10,8.93,20,20,0.24948,100.0,cuda
+10,ahsanjavid/convnext-tiny-finetuned-cifar10,0.46,20,1,0.02368,100.0,cuda
+11,ahsanjavid/convnext-tiny-finetuned-cifar10,0.39,20,2,0.019743,100.0,cuda
+12,ahsanjavid/convnext-tiny-finetuned-cifar10,0.29,20,5,0.014685,100.0,cuda
+13,ahsanjavid/convnext-tiny-finetuned-cifar10,0.30,20,10,0.015873,100.0,cuda
+14,ahsanjavid/convnext-tiny-finetuned-cifar10,0.29,20,20,0.0146268,100.0,cuda
