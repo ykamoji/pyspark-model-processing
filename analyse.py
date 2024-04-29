@@ -1,6 +1,6 @@
 import glob
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import lit, explode, col
+from pyspark.sql.functions import lit, explode, col, desc
 from pyspark.sql.types import StructType, StructField, IntegerType, ArrayType, FloatType
 
 ## Training analysis
@@ -79,7 +79,7 @@ for file in training_logs:
         select("model", "log.train_runtime", "log.train_samples_per_second", "log.train_steps_per_second")
 
     df_eval_results = df_logs.filter(col("log.eval_accuracy").isNotNull()). \
-        orderBy(col("log.step")).limit(1).withColumn("model", lit(model_name)). \
+        orderBy(desc(col("log.step"))).limit(1).withColumn("model", lit(model_name)). \
         select("model", "log.eval_accuracy", "log.eval_f1", "log.eval_loss", "log.eval_precision", "log.eval_recall",
                "log.eval_runtime", "log.eval_samples_per_second", "log.eval_steps_per_second")
 
@@ -98,18 +98,26 @@ for file in training_logs:
     else:
         dfs = dfs.union(final_df)
 
-dfs.show(truncate=False)
+dfs.orderBy(col("model")).show(truncate=False)
+
+# 3. Plot the graphs from DFs using pandas / sns / matlab
 
 dfs.toPandas().to_csv("results/training_results.csv")
 
 spark.stop()
 
-# 3. Plot the graphs from DFs using pandas / sns / matlab
+
 
 
 ## Inference analysis
 
+# -1. Add more batches for colab / CPU / TPU / Mac comparisons (done) and add few more models after finetuning on cifar 10
 
+# 0. Add one model for GPU vs CPU (possibly TPU) comparison with more images
+
+# 1. Collect all inferences into 1 DF.
+
+# 2. Plot the graphs from DFs using pandas / sns / matlab
 
 
 ## Steaming analysis

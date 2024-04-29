@@ -26,8 +26,14 @@ train_dataset, test_dataset, label_map = createDataSet(dataset_path)
 
 def startInference(spark, model_name, device, total_images, batch_size):
 
-    processor = AutoImageProcessor.from_pretrained(model_name, cache_dir='models/')
-    model = AutoModelForImageClassification.from_pretrained(model_name, cache_dir='models/')
+    if "results" in model_name:
+        parent_model = "/".join(model_name.split('/')[1:-1])
+        processor = AutoImageProcessor.from_pretrained(parent_model, cache_dir='models/')
+        model = AutoModelForImageClassification.from_pretrained(model_name, use_safetensors=True)
+    else:
+        processor = AutoImageProcessor.from_pretrained(model_name, cache_dir='models/')
+        model = AutoModelForImageClassification.from_pretrained(model_name, cache_dir='models/')
+
     model.eval()
     device = torch.device(device)
     model.to(device)
@@ -99,34 +105,34 @@ def startInference(spark, model_name, device, total_images, batch_size):
     balanced_accuracy = round(balanced_accuracy/len(results),3)
     average_batch_duration = round(average_batch_duration/len(results),5)
 
+    if "results/" in model_name:
+        model_name = "/".join(model_name.split('/')[1:-1])
+
     df = spark.createDataFrame([(model_name, end, total_images, batch_size, average_batch_duration, balanced_accuracy)],
                                col_labels, schema)
 
     return df
 
 
+common_params = [
+    {"total_images": 100, "batch_size": 1},
+    {"total_images": 100, "batch_size": 2},
+    {"total_images": 100, "batch_size": 5},
+    {"total_images": 100, "batch_size": 10},
+    {"total_images": 100, "batch_size": 20},
+    {"total_images": 100, "batch_size": 40},
+    {"total_images": 100, "batch_size": 50},
+    {"total_images": 100, "batch_size": 70},
+    {"total_images": 100, "batch_size": 100},
+]
+
 inference_params = {
-    "aaraki/vit-base-patch16-224-in21k-finetuned-cifar10":[
-            {"total_images": 20, "batch_size": 1},
-            {"total_images": 20, "batch_size": 2},
-            {"total_images": 20, "batch_size": 5},
-            {"total_images": 20, "batch_size": 10},
-            {"total_images": 20, "batch_size": 20},
-    ],
-    "tzhao3/DeiT-CIFAR10":[
-            {"total_images": 20, "batch_size": 1},
-            {"total_images": 20, "batch_size": 2},
-            {"total_images": 20, "batch_size": 5},
-            {"total_images": 20, "batch_size": 10},
-            {"total_images": 20, "batch_size": 20}
-    ],
-    "ahsanjavid/convnext-tiny-finetuned-cifar10":[
-            {"total_images": 20, "batch_size": 1},
-            {"total_images": 20, "batch_size": 2},
-            {"total_images": 20, "batch_size": 5},
-            {"total_images": 20, "batch_size": 10},
-            {"total_images": 20, "batch_size": 20},
-        ]
+    "aaraki/vit-base-patch16-224-in21k-finetuned-cifar10":common_params,
+    "tzhao3/DeiT-CIFAR10": common_params,
+    "ahsanjavid/convnext-tiny-finetuned-cifar10":common_params,
+    "results/facebook/deit-tiny-patch16-224/models":common_params,
+    "results/facebook/deit-tiny-distilled-patch16-224/models":common_params,
+    "results/facebook/convnextv2-tiny-22k-224/models":common_params
 }
 
 if __name__ == "__main__":

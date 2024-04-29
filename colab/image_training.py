@@ -8,7 +8,7 @@ from pyspark.sql import SparkSession
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 from transformers import Trainer, TrainingArguments
 from transformers.training_args import OptimizerNames
-from ..utils import vit_model_list, conv_model_list
+# from ..utils import vit_model_list, conv_model_list
 
 dataset_path = os.getcwd() + '/dataset'
 
@@ -149,7 +149,7 @@ def count_parameters(model):
 
 
 if __name__ == "__main__":
-    startTraining(vit_model_list[2], False)
+    startTraining("facebook/convnextv2-tiny-22k-224", False)
     # for model in conv_model_list + vit_model_list:
     #     params, size = count_parameters(model)
     #     print(f"{model} : Params:{params/1000**2:.3f} , Size:{size/1024**2:.3f}")
