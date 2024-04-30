@@ -115,15 +115,14 @@ def startInference(spark, model_name, device, total_images, batch_size):
 
 
 common_params = [
-    {"total_images": 100, "batch_size": 1},
-    {"total_images": 100, "batch_size": 2},
-    {"total_images": 100, "batch_size": 5},
-    {"total_images": 100, "batch_size": 10},
-    {"total_images": 100, "batch_size": 20},
-    {"total_images": 100, "batch_size": 40},
-    {"total_images": 100, "batch_size": 50},
-    {"total_images": 100, "batch_size": 70},
-    {"total_images": 100, "batch_size": 100},
+    {"total_images": 200, "batch_size": 1},
+    {"total_images": 200, "batch_size": 2},
+    {"total_images": 200, "batch_size": 5},
+    {"total_images": 200, "batch_size": 7},
+    {"total_images": 200, "batch_size": 10},
+    {"total_images": 200, "batch_size": 20},
+    {"total_images": 200, "batch_size": 30},
+    {"total_images": 200, "batch_size": 40}
 ]
 
 inference_params = {

@@ -111,9 +111,9 @@ spark.stop()
 
 ## Inference analysis
 
-# -1. Add more batches for colab / CPU / TPU / Mac comparisons (done) and add few more models after finetuning on cifar 10
+# -1. Add more batches for colab / CPU / Mac comparisons (done) and add few more models after finetuning on cifar 10
 
-# 0. Add one model for GPU vs CPU (possibly TPU) comparison with more images
+# 0. Add one model for GPU vs CPU comparison with more images
 
 # 1. Collect all inferences into 1 DF.
 
