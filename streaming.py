@@ -1,10 +1,10 @@
 import os.path
-
 from transformers import ViTForImageClassification, ViTImageProcessor
 import torch
+import numpy as np
 from utils import get_label_map, select_cast
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import *
+import pyspark.sql.functions as F
 from pyspark.sql.types import *
 import time
 
@@ -42,11 +42,6 @@ def predictImage(record):
     pred = logits.argmax(-1).item()
     return class_label, True if gt == pred else False
 
-
-def calc_acc(record):
-    return record[0], f"{float(sum(record[1]) * 100 / len(record[1])):.2f}%"
-
-
 def processBatch(batch_df, query_batch_id):
 
     batch_id = batch_df.select("idx").first().idx
@@ -54,7 +49,7 @@ def processBatch(batch_df, query_batch_id):
     tracker_df = batch_df.sparkSession.read.json(tracker_path)
 
     tracker_df = tracker_df.withColumn("start",
-                                       when(tracker_df.batch_id == batch_id, time.time()).otherwise(tracker_df.start))
+                                       F.when(tracker_df.batch_id == batch_id, time.time()).otherwise(tracker_df.start))
 
     results = batch_df.sparkSession.sparkContext.parallelize(batch_df.rdd.collect()) \
         .map(reshape_image).map(predictImage).collect()
@@ -62,16 +57,25 @@ def processBatch(batch_df, query_batch_id):
     print("-" * 50)
     print(f"Batch {batch_id}")
     print("-" * 50)
+    accuracy = 0
     for class_label, pred in results:
         print(f"{class_label} : {pred}")
+        if pred:
+            accuracy += 1
+
+    accuracy /= len(results)
+    accuracy = round(accuracy*100, 3)
     print("-" * 50)
     print("-" * 50 + "\n\n")
 
     tracker_df = tracker_df.withColumn("end",
-                                       when(tracker_df.batch_id == batch_id, time.time()).otherwise(tracker_df.end))
+                                       F.when(tracker_df.batch_id == batch_id, time.time()).otherwise(tracker_df.end))
 
-    tracker_df.select(col("batch_id"), select_cast('triggered'), select_cast('start'), select_cast('end'))\
-        .show(truncate=False)
+    tracker_df = tracker_df.withColumn("accuracy",
+                                       F.when(tracker_df.batch_id == batch_id, accuracy).otherwise(tracker_df.accuracy))
+
+    tracker_df.select(F.col("batch_id"), F.col("batch_size"), F.col("accuracy"),
+                      select_cast('triggered'), select_cast('start'), select_cast('end')).show(truncate=False)
 
     tracker_df.toPandas().to_json(tracker_path, orient='records', force_ascii=False, lines=True)
 

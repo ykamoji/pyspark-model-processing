@@ -1,5 +1,5 @@
 import pickle
-from pyspark.sql.types import StructType, IntegerType, StructField, TimestampType
+from pyspark.sql.types import StructType, IntegerType, StructField, TimestampType, FloatType
 from pyspark.sql.functions import col
 
 conv_model_list = [
@@ -26,9 +26,11 @@ vit_model_list = [
 
 streaming_schema = StructType([
         StructField("batch_id",IntegerType(), False),
+        StructField("batch_size",IntegerType(), False),
         StructField("triggered",TimestampType(), False),
         StructField("start", TimestampType()),
         StructField("end", TimestampType()),
+        StructField("accuracy", FloatType(), False),
 ])
 
 model_details = {
@@ -49,6 +51,7 @@ model_details = {
     "facebook/deit-tiny-distilled-patch16-224": {"params": 5.911, "size": 22.548},
     "facebook/deit-base-distilled-patch16-224": {"params": 87.338, "size": 333.169},
 }
+
 
 def createDataSet(dataset_path):
     train_dataset = []
