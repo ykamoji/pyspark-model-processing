@@ -1,5 +1,5 @@
 import pickle
-from pyspark.sql.types import StructType, IntegerType, StructField, TimestampType, FloatType
+from pyspark.sql.types import StructType, IntegerType, StructField, TimestampType, FloatType, StringType
 from pyspark.sql.functions import col
 
 conv_model_list = [
@@ -31,6 +31,7 @@ streaming_schema = StructType([
         StructField("start", TimestampType()),
         StructField("end", TimestampType()),
         StructField("accuracy", FloatType(), False),
+        StructField("env", StringType(), False),
 ])
 
 model_details = {
@@ -78,6 +79,7 @@ def collate_fn(images, labels):
         'pixel_values': images['pixel_values'],
         'labels': labels
     }
+
 
 def select_cast(column):
     return col(column).cast(TimestampType())

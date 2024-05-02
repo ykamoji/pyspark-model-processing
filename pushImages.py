@@ -11,7 +11,7 @@ dataset_path = '/Users/ykamoji/Documents/ImageDatabase/cifar-10-batches-py/'
 output_path = 'streams/input/'
 output_archive = 'streams/archive'
 tracker_path = 'logs/tracker.json'
-col_labels = ["batch_id", "batch_size", "triggered", "start", "end", "accuracy"]
+col_labels = ["batch_id", "batch_size", "triggered", "start", "end", "accuracy", "env"]
 
 
 def clear_pushes():
@@ -20,7 +20,12 @@ def clear_pushes():
         os.chmod(f, 0o777)
         os.remove(f)
 
-    # shutil.rmtree(output_archive, ignore_errors=True)
+    if os.path.exists(tracker_path):
+        os.remove(tracker_path)
+
+    for root, dirs, files in os.walk(output_archive, topdown=False):
+        for dir in dirs:
+            shutil.rmtree(os.path.join(root,dir), ignore_errors=True)
 
 
 def log(batch_id, batch_size):
@@ -32,7 +37,7 @@ def log(batch_id, batch_size):
         config("spark.driver.memory", "16G"). \
         getOrCreate()
 
-    new_df = spark.createDataFrame([(batch_id, batch_size, time.time(), 0.0, 0.0, 0.0)], col_labels, streaming_schema)
+    new_df = spark.createDataFrame([(batch_id, batch_size, time.time(), 0.0, 0.0, 0.0, "mac_cpu")], col_labels, streaming_schema)
     if not os.path.exists(tracker_path):
         new_df.toPandas().to_json(tracker_path, orient='records', force_ascii=False, lines=True)
     else:
@@ -87,15 +92,15 @@ def push(type, interval, stop):
 if __name__ == '__main__':
 
     push_types = [
-        ("constant", 20),
-        ("random", (20, 50)),
-        ("increasing", 20)
+        ("constant", 50),
+        ("random", (50, 200)),
+        ("increasing", 50)
     ]
 
-    interval = 10
-    stop = 5
+    interval = 20
+    stop = 20
     clear_pushes()
     print("Starting pushing...")
     time.sleep(5)
 
-    push(push_types[2], interval, stop)
+    push(push_types[0], interval, stop)

@@ -46,13 +46,12 @@ def processBatch(batch_df, query_batch_id):
 
     batch_id = batch_df.select("idx").first().idx
 
-    tracker_df = batch_df.sparkSession.read.json(tracker_path)
-
-    tracker_df = tracker_df.withColumn("start",
-                                       F.when(tracker_df.batch_id == batch_id, time.time()).otherwise(tracker_df.start))
+    start = time.time()
 
     results = batch_df.sparkSession.sparkContext.parallelize(batch_df.rdd.collect()) \
         .map(reshape_image).map(predictImage).collect()
+
+    end = time.time()
 
     print("-" * 50)
     print(f"Batch {batch_id}")
@@ -68,14 +67,24 @@ def processBatch(batch_df, query_batch_id):
     print("-" * 50)
     print("-" * 50 + "\n\n")
 
+    tracker_df = batch_df.sparkSession.read.json(tracker_path)
+
+    tracker_df = tracker_df.withColumn("start",
+                                       F.when(tracker_df.batch_id == batch_id, start).otherwise(tracker_df.start))
+
     tracker_df = tracker_df.withColumn("end",
-                                       F.when(tracker_df.batch_id == batch_id, time.time()).otherwise(tracker_df.end))
+                                       F.when(tracker_df.batch_id == batch_id, end).otherwise(tracker_df.end))
 
     tracker_df = tracker_df.withColumn("accuracy",
                                        F.when(tracker_df.batch_id == batch_id, accuracy).otherwise(tracker_df.accuracy))
 
-    tracker_df.select(F.col("batch_id"), F.col("batch_size"), F.col("accuracy"),
-                      select_cast('triggered'), select_cast('start'), select_cast('end')).show(truncate=False)
+    tracker_df.select(F.col("batch_id"), F.col("batch_size"), F.col("accuracy"), select_cast('triggered'),
+                      select_cast('start'), select_cast('end'), F.col("env")).\
+                withColumn("start", F.when(F.col("start").cast(IntegerType()) == 0, "-").\
+                           otherwise((F.col("start")))). \
+                withColumn("end", F.when(F.col("end").cast(IntegerType()) == 0, "-").\
+                            otherwise((F.col("end")))).\
+                show(truncate=False)
 
     tracker_df.toPandas().to_json(tracker_path, orient='records', force_ascii=False, lines=True)
 
