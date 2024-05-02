@@ -161,7 +161,7 @@ if __name__ == "__main__":
 
     spark = SparkSession.builder. \
         appName("ImageClassification"). \
-        master("local[1]"). \
+        master("local[*]"). \
         config("spark.executor.memory", "16G"). \
         config("spark.driver.memory", "16G"). \
         getOrCreate()

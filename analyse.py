@@ -34,8 +34,6 @@ def collect_training_results(spark):
         StructField("log_history", ArrayType(log_history), False),
     ])
 
-
-
     dfs = None
 
     for file in training_logs:
@@ -78,23 +76,20 @@ def collect_training_results(spark):
 
     dfs.orderBy(col("model")).show(truncate=False)
 
-    # 3. Plot the graphs from DFs using pandas / sns / matlab
-
     dfs.toPandas().to_csv("results/training_results.csv")
 
-
-
+    ##TODO:: Plot the graphs from DFs using sns
 
 ## Inference analysis
-
-# 1. Collect all inferences into 1 DF.
-
-# 2. Plot the graphs from DFs using pandas / sns / matlab
+def analyse_inference(spark):
+    ##TODO:: Plot the graphs from DFs using pandas & sns
+    pass
 
 
 ## Steaming analysis
-
-
+def streaming_analysis(spark):
+    pass
+    ##TODO:: Plot the graphs from DFs using pandas & sns
 
 if __name__ == "__main__":
 
@@ -105,6 +100,10 @@ if __name__ == "__main__":
         config("spark.driver.memory", "16G"). \
         getOrCreate()
 
-    collect_training_results(spark)
+    # collect_training_results(spark)
+
+    analyse_inference(spark)
+
+    streaming_analysis(spark)
 
     spark.stop()
