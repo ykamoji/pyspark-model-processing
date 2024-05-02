@@ -46,6 +46,9 @@ def processBatch(batch_df, query_batch_id):
 
     batch_id = batch_df.select("idx").first().idx
 
+    if not batch_id:
+        batch_id = query_batch_id
+
     start = time.time()
 
     results = batch_df.sparkSession.sparkContext.parallelize(batch_df.rdd.collect()) \
@@ -130,7 +133,7 @@ def start_streaming():
 
     query.writeStream.foreachBatch(processBatch).start()
 
-    time.sleep(120)
+    time.sleep(600)
     spark.stop()
 
 
