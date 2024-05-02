@@ -31,6 +31,24 @@ streaming_schema = StructType([
         StructField("end", TimestampType()),
 ])
 
+model_details = {
+    "facebook/convnext-tiny-224": {"params": 28.589, "size": 109.059},
+    "facebook/convnext-small-224": {"params": 50.224, "size": 191.588},
+    "facebook/convnext-base-224": {"params": 88.591, "size": 337.950},
+    "facebook/convnext-large-224": {"params": 197.767, "size": 754.423},
+    "facebook/convnextv2-nano-22k-224": {"params": 15.624, "size": 59.600},
+    "facebook/convnextv2-tiny-22k-224": {"params": 28.635, "size": 109.236},
+    "facebook/convnextv2-base-22k-224": {"params": 88.718, "size": 338.432},
+    "facebook/convnextv2-large-22k-224": {"params": 197.957, "size": 755.145},
+    "facebook/convnextv2-huge-1k-224": {"params": 660.290, "size": 2518.805},
+    "google/vit-base-patch16-224": {"params": 86.568, "size": 330.229},
+    "google/vit-large-patch16-224": {"params": 304.327, "size": 1160.914},
+    "facebook/deit-tiny-patch16-224": {"params": 5.717, "size": 21.810},
+    "facebook/deit-small-patch16-224": {"params": 22.051, "size": 84.117},
+    "facebook/deit-base-patch16-224": {"params": 86.568, "size": 330.229},
+    "facebook/deit-tiny-distilled-patch16-224": {"params": 5.911, "size": 22.548},
+    "facebook/deit-base-distilled-patch16-224": {"params": 87.338, "size": 333.169},
+}
 
 def createDataSet(dataset_path):
     train_dataset = []
