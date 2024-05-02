@@ -111,55 +111,57 @@ def startInference(spark, model_name, device, total_images, batch_size):
     df = spark.createDataFrame([(model_name, end, total_images, batch_size, average_batch_duration, balanced_accuracy)],
                                col_labels, schema)
 
+    df.show(truncate=False)
+
     return df
 
 
-# common_params = [
-#     {"total_images": 200, "batch_size": 1},
-#     {"total_images": 200, "batch_size": 2},
-#     {"total_images": 200, "batch_size": 5},
-#     {"total_images": 200, "batch_size": 7},
-#     {"total_images": 200, "batch_size": 10},
-#     {"total_images": 200, "batch_size": 20},
-#     {"total_images": 200, "batch_size": 30},
-#     {"total_images": 200, "batch_size": 40}
-# ]
-
 common_params = [
-    {"total_images": 20, "batch_size": 20},
-    {"total_images": 40, "batch_size": 20},
-    {"total_images": 80, "batch_size": 20},
-    {"total_images": 100, "batch_size": 20},
-    {"total_images": 120, "batch_size": 20},
-    {"total_images": 160, "batch_size": 20},
+    {"total_images": 200, "batch_size": 1},
+    {"total_images": 200, "batch_size": 2},
+    {"total_images": 200, "batch_size": 5},
+    {"total_images": 200, "batch_size": 7},
+    {"total_images": 200, "batch_size": 10},
     {"total_images": 200, "batch_size": 20},
-    {"total_images": 300, "batch_size": 20},
-    {"total_images": 400, "batch_size": 20},
-    {"total_images": 500, "batch_size": 20},
-    {"total_images": 700, "batch_size": 20},
-    {"total_images": 1000, "batch_size": 20},
-    {"total_images": 2000, "batch_size": 20},
-    {"total_images": 3000, "batch_size": 20},
-    {"total_images": 4000, "batch_size": 20},
-    {"total_images": 5000, "batch_size": 20},
-    {"total_images": 7000, "batch_size": 20},
-    {"total_images": 10000, "batch_size": 20},
+    {"total_images": 200, "batch_size": 30},
+    {"total_images": 200, "batch_size": 40}
 ]
+
+# common_params = [
+#     {"total_images": 20, "batch_size": 20},
+#     {"total_images": 40, "batch_size": 20},
+#     {"total_images": 80, "batch_size": 20},
+#     {"total_images": 100, "batch_size": 20},
+#     {"total_images": 120, "batch_size": 20},
+#     {"total_images": 160, "batch_size": 20},
+#     {"total_images": 200, "batch_size": 20},
+#     {"total_images": 300, "batch_size": 20},
+#     {"total_images": 400, "batch_size": 20},
+#     {"total_images": 500, "batch_size": 20},
+#     {"total_images": 700, "batch_size": 20},
+#     {"total_images": 1000, "batch_size": 20},
+#     {"total_images": 2000, "batch_size": 20},
+#     {"total_images": 3000, "batch_size": 20},
+#     {"total_images": 4000, "batch_size": 20},
+#     {"total_images": 5000, "batch_size": 20},
+#     {"total_images": 7000, "batch_size": 20},
+#     {"total_images": 10000, "batch_size": 20},
+# ]
 
 inference_params = {
     "aaraki/vit-base-patch16-224-in21k-finetuned-cifar10":common_params,
-    # "tzhao3/DeiT-CIFAR10": common_params,
-    # "ahsanjavid/convnext-tiny-finetuned-cifar10":common_params,
-    # "results/facebook/deit-tiny-patch16-224/models":common_params,
-    # "results/facebook/deit-tiny-distilled-patch16-224/models":common_params,
-    # "results/facebook/convnextv2-tiny-22k-224/models":common_params
+    "tzhao3/DeiT-CIFAR10": common_params,
+    "ahsanjavid/convnext-tiny-finetuned-cifar10":common_params,
+    "results/facebook/deit-tiny-patch16-224/models":common_params,
+    "results/facebook/deit-tiny-distilled-patch16-224/models":common_params,
+    "results/facebook/convnextv2-tiny-22k-224/models":common_params
 }
 
 if __name__ == "__main__":
 
     spark = SparkSession.builder. \
         appName("ImageClassification"). \
-        master("local[8]"). \
+        master("local[1]"). \
         config("spark.executor.memory", "16G"). \
         config("spark.driver.memory", "16G"). \
         getOrCreate()
