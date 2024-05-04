@@ -157,8 +157,8 @@ inference_params = {
     "results/facebook/convnextv2-tiny-22k-224/models":common_params
 }
 
-if __name__ == "__main__":
 
+def perform_inference():
     spark = SparkSession.builder. \
         appName("ImageClassification"). \
         master("local[*]"). \
@@ -177,7 +177,7 @@ if __name__ == "__main__":
             else:
                 dfs = dfs.union(df)
 
-    dfs = dfs.withColumn("env", lit('mac_'+device))
+    dfs = dfs.withColumn("env", lit('mac_' + device))
 
     dfs.show(truncate=False)
 
@@ -185,6 +185,28 @@ if __name__ == "__main__":
 
     spark.stop()
 
-    ## TODO: profiling
+
+def perform_profiling():
+
+    for model_name in ["aaraki/vit-base-patch16-224-in21k-finetuned-cifar10", "ahsanjavid/convnext-tiny-finetuned-cifar10"]:
+        for env in ["mps", "cpu"]:
+            with torch.autograd.profiler.profile(use_cuda=False) as prof:
+                processor = AutoImageProcessor.from_pretrained(model_name, cache_dir='models/')
+                model = AutoModelForImageClassification.from_pretrained(model_name, cache_dir='models/')
+                input = processor(test_dataset[0][0].reshape(1,3,32,32), return_tensors="pt")
+                model.to(torch.device(env))
+                input = input.to(torch.device(env))
+                model(**input)
+            print(prof.key_averages().table(sort_by='self_cpu_time_total', row_limit=5))
+
+
+if __name__ == "__main__":
+
+    # perform_inference()
+
+    perform_profiling()
+
+
+
 
 
