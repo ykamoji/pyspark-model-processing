@@ -1,0 +1,16 @@
+{"accuracy":100.0,"batch_id":1,"batch_size":5,"end":1714797481.3902111053,"env":"mac_cpu","start":1714797475.641392231,"triggered":1714797470.1615359783}
+{"accuracy":100.0,"batch_id":2,"batch_size":10,"end":1714797488.9587390423,"env":"mac_cpu","start":1714797483.043669939,"triggered":1714797478.6239659786}
+{"accuracy":100.0,"batch_id":3,"batch_size":15,"end":1714797496.0123410225,"env":"mac_cpu","start":1714797490.4126029015,"triggered":1714797488.0513050556}
+{"accuracy":100.0,"batch_id":4,"batch_size":20,"end":1714797502.788268,"env":"mac_cpu","start":1714797497.5394812,"triggered":1714797495.4554188251}
+{"accuracy":100.0,"batch_id":5,"batch_size":25,"end":1714797510.881321907,"env":"mac_cpu","start":1714797504.4798469543,"triggered":1714797502.5465531349}
+{"accuracy":100.0,"batch_id":6,"batch_size":30,"end":1714797518.6085829735,"env":"mac_cpu","start":1714797511.9554920197,"triggered":1714797509.5727491379}
+{"accuracy":100.0,"batch_id":7,"batch_size":35,"end":1714797525.2579789162,"env":"mac_cpu","start":1714797519.1619620323,"triggered":1714797516.9384560585}
+{"accuracy":100.0,"batch_id":8,"batch_size":40,"end":1714797532.9319479465,"env":"mac_cpu","start":1714797526.0656609535,"triggered":1714797524.2014038563}
+{"accuracy":100.0,"batch_id":9,"batch_size":45,"end":1714797540.8132090569,"env":"mac_cpu","start":1714797533.2792100906,"triggered":1714797531.1082370281}
+{"accuracy":100.0,"batch_id":10,"batch_size":50,"end":1714797548.3677060604,"env":"mac_cpu","start":1714797541.2779459953,"triggered":1714797538.2510859966}
+{"accuracy":100.0,"batch_id":11,"batch_size":55,"end":1714797557.2132108212,"env":"mac_cpu","start":1714797548.771271944,"triggered":1714797545.6786501408}
+{"accuracy":100.0,"batch_id":12,"batch_size":60,"end":1714797564.4245259762,"env":"mac_cpu","start":1714797557.5911030769,"triggered":1714797552.8698549271}
+{"accuracy":100.0,"batch_id":13,"batch_size":65,"end":1714797574.0948228836,"env":"mac_cpu","start":1714797564.9606029987,"triggered":1714797560.5976979733}
+{"accuracy":100.0,"batch_id":14,"batch_size":70,"end":1714797583.4219830036,"env":"mac_cpu","start":1714797574.4731349945,"triggered":1714797568.3192989826}
+{"accuracy":98.667,"batch_id":15,"batch_size":75,"end":1714797592.7033119202,"env":"mac_cpu","start":1714797583.8186130524,"triggered":1714797576.7875089645}
+{"accuracy":100.0,"batch_id":16,"batch_size":80,"end":1714797603.0439009666,"env":"mac_cpu","start":1714797593.1319730282,"triggered":1714797584.9820261002}

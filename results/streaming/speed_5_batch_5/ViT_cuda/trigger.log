@@ -1,0 +1,35 @@
+Starting pushing...
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+24/05/04 04:39:30 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                                              (0 + 2) / 2]                                                                                                    Pushed 1 data
+24/05/04 04:39:52 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 2 data
+24/05/04 04:40:05 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3][Stage 1:====================================================>                          (2 + 1) / 3]                                                                                                    Pushed 3 data
+24/05/04 04:40:16 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 4 data
+24/05/04 04:40:26 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 5 data
+24/05/04 04:40:37 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 6 data
+24/05/04 04:40:49 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 7 data
+24/05/04 04:41:40 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 8 data
+24/05/04 04:41:50 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:>                                                                              (0 + 3) / 3][Stage 1:==========================>                                                    (1 + 2) / 3][Stage 1:====================================================>                          (2 + 1) / 3]                                                                                                    Pushed 9 data
+24/05/04 04:42:01 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 10 data
+24/05/04 04:42:19 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 11 data
+24/05/04 04:42:29 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 12 data
+24/05/04 04:42:42 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 13 data
+24/05/04 04:42:52 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:>                                                                              (0 + 2) / 3][Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 14 data
+24/05/04 04:43:08 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3][Stage 1:====================================================>                          (2 + 1) / 3]                                                                                                    Pushed 15 data
+24/05/04 04:43:20 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+[Stage 1:==========================>                                                    (1 + 2) / 3]                                                                                                    Pushed 16 data

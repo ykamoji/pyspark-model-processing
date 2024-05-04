@@ -1,5 +1,5 @@
 import os.path
-from transformers import ViTForImageClassification, ViTImageProcessor
+from transformers import AutoProcessor, AutoModelForImageClassification
 import torch
 import numpy as np
 from utils import get_label_map, select_cast
@@ -13,9 +13,9 @@ tracker_path = 'logs/tracker.json'
 
 label_map = get_label_map(dataset_path)
 
-processor = ViTImageProcessor.from_pretrained('aaraki/vit-base-patch16-224-in21k-finetuned-cifar10',
+processor = AutoProcessor.from_pretrained('aaraki/vit-base-patch16-224-in21k-finetuned-cifar10',
                                               cache_dir='models/')
-model = ViTForImageClassification.from_pretrained('aaraki/vit-base-patch16-224-in21k-finetuned-cifar10',
+model = AutoModelForImageClassification.from_pretrained('aaraki/vit-base-patch16-224-in21k-finetuned-cifar10',
                                                   cache_dir='models/')
 model.eval()
 device = torch.device('cpu')
@@ -51,10 +51,14 @@ def processBatch(batch_df, query_batch_id):
 
     start = time.time()
 
+    print(f"Batch {batch_id} start {start}")
+
     results = batch_df.sparkSession.sparkContext.parallelize(batch_df.rdd.collect()) \
         .map(reshape_image).map(predictImage).collect()
 
     end = time.time()
+
+    print(f"Batch {batch_id} start {start} end {end}")
 
     print("-" * 50)
     print(f"Batch {batch_id}")
@@ -71,6 +75,8 @@ def processBatch(batch_df, query_batch_id):
     print("-" * 50 + "\n\n")
 
     tracker_df = batch_df.sparkSession.read.json(tracker_path)
+
+    print(f"Batch {batch_id} start {start} end {end}")
 
     tracker_df = tracker_df.withColumn("start",
                                        F.when(tracker_df.batch_id == batch_id, start).otherwise(tracker_df.start))

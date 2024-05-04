@@ -8,7 +8,7 @@ from pyspark.sql import SparkSession
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 from transformers import Trainer, TrainingArguments
 from transformers.training_args import OptimizerNames
-# from ..utils import vit_model_list, conv_model_list
+# from utils import vit_model_list, conv_model_list
 
 dataset_path = os.getcwd() + '/dataset'
 
@@ -24,8 +24,8 @@ def get_fine_tuning_trainer_args(output_path):
         per_device_eval_batch_size=32,
         evaluation_strategy="steps",
         num_train_epochs=1,
-        save_steps=40,
-        eval_steps=40,
+        save_steps=20,
+        eval_steps=20,
         logging_steps=10,
         learning_rate=5.e-05,
         warmup_ratio=0.1,
@@ -48,7 +48,7 @@ def build_metrics():
     metric_collector = []
 
     for evals in metric_combined:
-        metric_collector.append(evaluate.load(evals, cache_dir="../metrics/", trust_remote_code=True))
+        metric_collector.append(evaluate.load(evals, cache_dir="metrics/", trust_remote_code=True))
 
     def compute_metrics(p):
 
@@ -79,9 +79,9 @@ def startTraining(model_name, distributed_training=False):
     test_dataset = load_dataset('cifar10', split=f"test[:100%]", verification_mode='no_checks',
                                 cache_dir=dataset_path+'/test')
 
-    pretrained_model = AutoModelForImageClassification.from_pretrained(model_name, cache_dir='../models/')
+    pretrained_model = AutoModelForImageClassification.from_pretrained(model_name, cache_dir='models/')
 
-    feature_extractor = AutoImageProcessor.from_pretrained(model_name, cache_dir='../models/')
+    feature_extractor = AutoImageProcessor.from_pretrained(model_name, cache_dir='models/')
 
     print(f"Starting fine-tuning on model {model_name}:")
 
@@ -90,7 +90,7 @@ def startTraining(model_name, distributed_training=False):
         inputs['label'] = batchImage['label']
         return inputs
 
-    fine_tune_args = get_fine_tuning_trainer_args(f"../results/{model_name}")
+    fine_tune_args = get_fine_tuning_trainer_args(f"results/{model_name}")
 
     def trainer():
         fine_tune_trainer = Trainer(
@@ -104,7 +104,7 @@ def startTraining(model_name, distributed_training=False):
         print(f"Starting...")
         train_results = fine_tune_trainer.train(ignore_keys_for_eval=IGNORE_KEYS)
 
-        fine_tune_trainer.save_model(output_dir=f'../results/{model_name}/models')
+        fine_tune_trainer.save_model(output_dir=f'results/{model_name}/models')
 
         fine_tune_trainer.log_metrics("train", train_results.metrics)
         fine_tune_trainer.save_metrics("train", train_results.metrics)
@@ -139,7 +139,7 @@ def startTraining(model_name, distributed_training=False):
 
 
 def count_parameters(model):
-    pretrained_model = AutoModelForImageClassification.from_pretrained(model, cache_dir='../models/')
+    pretrained_model = AutoModelForImageClassification.from_pretrained(model, cache_dir='models/')
     params = pretrained_model.num_parameters()
     size = 0
     for param in pretrained_model.parameters():
@@ -149,7 +149,7 @@ def count_parameters(model):
 
 
 if __name__ == "__main__":
-    startTraining("facebook/convnextv2-tiny-22k-224", False)
+    startTraining("facebook/convnextv2-nano-22k-224", False)
     # for model in conv_model_list + vit_model_list:
     #     params, size = count_parameters(model)
     #     print(f"{model} : Params:{params/1000**2:.3f} , Size:{size/1024**2:.3f}")

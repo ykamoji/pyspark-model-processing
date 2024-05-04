@@ -1,0 +1,22 @@
+Starting pushing...
+24/05/04 00:33:24 WARN Utils: Your hostname, Yashs-MacBook-Pro.local resolves to a loopback address: 127.0.0.1; using 10.0.0.8 instead (on interface en0)
+24/05/04 00:33:24 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+24/05/04 00:33:24 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                        (0 + 12) / 12]                                                                                Pushed 1 data
+Pushed 2 data
+[Stage 1:====>                                                    (1 + 12) / 13][Stage 1:====================================================>    (12 + 1) / 13]                                                                                Pushed 3 data
+Pushed 4 data
+[Stage 1:====>                                                    (1 + 12) / 13]                                                                                Pushed 5 data
+[Stage 1:====>                                                    (1 + 12) / 13][Stage 1:====================================================>    (12 + 1) / 13]                                                                                Pushed 6 data
+Pushed 7 data
+[Stage 1:========================================>                 (9 + 4) / 13]                                                                                Pushed 8 data
+[Stage 1:====>                                                    (1 + 12) / 13][Stage 1:===================================>                      (8 + 5) / 13]                                                                                Pushed 9 data
+[Stage 1:====>                                                    (1 + 12) / 13][Stage 1:===================================>                      (8 + 5) / 13]                                                                                Pushed 10 data
+[Stage 1:====>                                                    (1 + 12) / 13]                                                                                Pushed 11 data
+[Stage 1:====>                                                    (1 + 12) / 13][Stage 1:====================================================>    (12 + 1) / 13]                                                                                Pushed 12 data
+[Stage 1:====>                                                    (1 + 12) / 13][Stage 1:===========================================>             (10 + 3) / 13]                                                                                Pushed 13 data
+[Stage 1:====>                                                    (1 + 12) / 13][Stage 1:===========================================>             (10 + 3) / 13]                                                                                Pushed 14 data
+[Stage 1:====>                                                    (1 + 12) / 13]                                                                                Pushed 15 data
+[Stage 1:====>                                                    (1 + 12) / 13][Stage 1:======================>                                   (5 + 8) / 13]                                                                                Pushed 16 data

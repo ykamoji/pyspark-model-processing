@@ -1,0 +1,16 @@
+{"accuracy":100.0,"batch_id":1,"batch_size":5,"end":1714797625.2941303253,"env":"cuda","start":1714797600.9622590542,"triggered":1714797574.3866255283}
+{"accuracy":90.0,"batch_id":2,"batch_size":10,"end":1714797642.6321063042,"env":"cuda","start":1714797632.3441095352,"triggered":1714797592.1544795036}
+{"accuracy":100.0,"batch_id":3,"batch_size":15,"end":1714797697.8165693283,"env":"cuda","start":1714797644.765460968,"triggered":1714797606.2392532825}
+{"accuracy":100.0,"batch_id":4,"batch_size":20,"end":1714797719.218940258,"env":"cuda","start":1714797699.7451784611,"triggered":1714797616.9132943153}
+{"accuracy":96.0,"batch_id":5,"batch_size":25,"end":1714797744.496458292,"env":"cuda","start":1714797721.7218596935,"triggered":1714797626.6270060539}
+{"accuracy":96.667,"batch_id":6,"batch_size":30,"end":1714797766.3160903454,"env":"cuda","start":1714797746.9402880669,"triggered":1714797637.8830955029}
+{"accuracy":100.0,"batch_id":7,"batch_size":35,"end":1714797794.9110348225,"env":"cuda","start":1714797767.9926371574,"triggered":1714797649.6780230999}
+{"accuracy":97.5,"batch_id":8,"batch_size":40,"end":1714797818.1004052162,"env":"cuda","start":1714797797.4454162121,"triggered":1714797700.6451034546}
+{"accuracy":100.0,"batch_id":9,"batch_size":45,"end":1714797835.3348457813,"env":"cuda","start":1714797820.0434057713,"triggered":1714797710.2070345879}
+{"accuracy":98.0,"batch_id":10,"batch_size":50,"end":1714797850.7679247856,"env":"cuda","start":1714797836.8483138084,"triggered":1714797721.8527650833}
+{"accuracy":98.182,"batch_id":11,"batch_size":55,"end":1714797865.7437958717,"env":"cuda","start":1714797852.0390484333,"triggered":1714797739.770714283}
+{"accuracy":100.0,"batch_id":12,"batch_size":60,"end":1714797881.2155678272,"env":"cuda","start":1714797867.0960118771,"triggered":1714797749.8518533707}
+{"accuracy":98.462,"batch_id":13,"batch_size":65,"end":1714797892.0298008919,"env":"cuda","start":1714797883.4851214886,"triggered":1714797763.1408765316}
+{"accuracy":100.0,"batch_id":14,"batch_size":70,"end":1714797903.3617353439,"env":"cuda","start":1714797893.7651512623,"triggered":1714797773.387304306}
+{"accuracy":96.0,"batch_id":15,"batch_size":75,"end":1714797919.9332756996,"env":"cuda","start":1714797905.2569916248,"triggered":1714797789.1643936634}
+{"accuracy":98.75,"batch_id":16,"batch_size":80,"end":1714797941.4757688046,"env":"cuda","start":1714797921.5925540924,"triggered":1714797801.8352439404}

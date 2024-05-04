@@ -1,0 +1,54 @@
+Starting pushing...
+24/05/04 00:41:34 WARN Utils: Your hostname, Yashs-MacBook-Pro.local resolves to a loopback address: 127.0.0.1; using 10.0.0.8 instead (on interface en0)
+24/05/04 00:41:34 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+24/05/04 00:41:34 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/05/04 00:41:35 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:41:35 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+[Stage 0:>                                                        (0 + 12) / 12]                                                                                Pushed 1 data
+24/05/04 00:41:43 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:41:43 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 2 data
+24/05/04 00:41:50 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:41:50 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 3 data
+24/05/04 00:41:57 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:41:57 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 4 data
+24/05/04 00:42:04 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:42:04 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 5 data
+24/05/04 00:42:10 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:42:10 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 6 data
+24/05/04 00:42:17 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:42:17 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 7 data
+24/05/04 00:42:24 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:42:24 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 8 data
+24/05/04 00:42:30 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:42:30 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 9 data
+24/05/04 00:42:37 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:42:37 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 10 data
+24/05/04 00:42:43 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:42:43 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 11 data
+24/05/04 00:42:50 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:42:50 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 12 data
+24/05/04 00:42:57 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:42:57 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 13 data
+24/05/04 00:43:03 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:43:03 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 14 data
+24/05/04 00:43:10 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:43:10 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 15 data
+24/05/04 00:43:16 WARN Utils: Service 'SparkUI' could not bind on port 4051. Attempting port 4052.
+24/05/04 00:43:16 WARN Utils: Service 'SparkUI' could not bind on port 4052. Attempting port 4053.
+Pushed 16 data

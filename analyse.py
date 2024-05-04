@@ -1,8 +1,8 @@
 import glob
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import lit, explode, col, desc
+from pyspark.sql.functions import lit, explode, col, desc, when, array, struct, concat
 from pyspark.sql.types import StructType, StructField, IntegerType, ArrayType, FloatType, StringType
-from utils import model_details
+from utils import model_details, select_cast
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -81,11 +81,64 @@ def collect_training_results(spark):
 
     dfs.toPandas().to_csv("results/training_results.csv")
 
-    ##TODO:: Plot the graphs from DFs using sns
+
+def to_explode(df, by):
+    cols, dtypes = zip(*((c, t) for (c, t) in df.dtypes if c not in by))
+    kvs = explode(array([
+        struct(lit(c).alias("CATEGORY"), col(c).alias("Normalized_value")) for c in cols
+    ])).alias("kvs")
+    return df.select(by + [kvs]).select(by + ["kvs.CATEGORY", "kvs.Normalized_value"])
+
+
+def analyse_training_results(spark):
+
+    train_results_df = spark.read.option("header", True).csv("results/training_results.csv")
+
+    train_results_df = train_results_df\
+        .withColumn("Model", when(col("Model") == "google/vit-base-patch16-224", "ViT")\
+                    .otherwise(train_results_df.model))\
+        .withColumn("Model", when(col("Model") == "facebook/deit-tiny-patch16-224", "DeiT") \
+                    .otherwise(col("Model")))\
+        .withColumn("Model", when(col("Model") == "facebook/convnext-small-224", "ConvNext") \
+                    .otherwise(col("Model")))\
+        .withColumn("Model", when(col("Model") == "facebook/convnextv2-nano-22k-224", "ConvNextV2") \
+                    .otherwise(col("Model")))\
+        .filter((col("Model") == "ViT") | (col("Model") == "DeiT") | (col("Model") == "ConvNext") |
+                (col("Model") == "ConvNextV2"))\
+        .withColumn("env", when(col("env") == 'COLAB_GPU', "LINUX_GPU")\
+                    .otherwise(when(col("env") == 'GPU', "MAC_GPU").otherwise(col("env"))))\
+        .select(col("env"), col("Model"), col("train_runtime").cast(FloatType()), col("total_flos"), 
+                col("train_steps_per_second"),col("train_samples_per_second"))
+
+    for column in ["train_runtime", "total_flos", "train_steps_per_second", "train_samples_per_second"]:
+        column_max = train_results_df.agg({column: "max"}).collect()[0][0]
+        train_results_df = train_results_df.withColumn(column, col(column) / column_max)
+
+    train_results_df = train_results_df.select(col("env"), col("Model"), col("total_flos").alias("FLOS"),
+                                               col("train_runtime").alias("Runtime"),
+                                               col("train_samples_per_second").alias("Batch_per_second"),
+                                               col("train_steps_per_second").alias("Step_per_second"))
+
+    # train_results_df.show(truncate=False)
+
+    train_results_df = to_explode(train_results_df, ['Model', "env"])
+
+    # train_results_df.show(100, truncate=False)
+
+    for env in ["MAC_GPU", "LINUX_GPU"]:
+        plt.style.use('seaborn-v0_8-darkgrid')
+        ax = sns.barplot(train_results_df.filter(col("env") == env).toPandas(), x="CATEGORY", y="Normalized_value",
+                         hue="Model", errorbar=None)
+        sns.move_legend(ax, "upper left", bbox_to_anchor=(0.1, 1))
+        plt.title(f"{env} Training")
+        # plt.yticks([])
+        # plt.savefig(f"results/{env}_Training")
+        plt.show()
 
 
 #################################### Inference analysis ####################################
 def analyse_inference(spark):
+
     inference_schema = StructType([
         StructField("model", StringType(), False),
         StructField("duration", FloatType(), False),
@@ -99,18 +152,18 @@ def analyse_inference(spark):
     df_batch_size_comparison = spark.read.option("header", True) \
         .schema(inference_schema).csv("results/inference_results_batch_size_comparison.csv")
 
-    # df_batch_size_comparison.show(truncate=False)
+    # validate_baseline_batch_size(df_batch_size_comparison)
 
-    model_keys = validate_baseline_batch_size(df_batch_size_comparison)
+    # train_results_df.show(100, truncate=False)
 
-    individual_model_plots(model_keys[3], df_batch_size_comparison)
+    individual_model_plots(df_batch_size_comparison)
 
     df_test_comparison = spark.read.option("header", True) \
         .schema(inference_schema).csv("results/inference_results_test_comparison.csv")
 
     # df_test_comparison.show(truncate=False)
 
-    validate_baseline_test(df_test_comparison)
+    # validate_baseline_test(df_test_comparison)
 
     test_plots(df_test_comparison)
 
@@ -132,7 +185,7 @@ def validate_baseline_batch_size(df_batch_size_comparison):
         return a
 
     check_correct_accuracies = df_rdd.map(model_env_acc_map). \
-        groupByKey().mapValues(list). \
+        groupByKey().map(list). \
         combineByKey(lambda k: list(set(k)), append, extend)
 
     detail = StructType([
@@ -148,24 +201,35 @@ def validate_baseline_batch_size(df_batch_size_comparison):
 
     check_df.show(truncate=False)
 
-    model_keys = check_correct_accuracies.keys().collect()
-    return model_keys
 
+def individual_model_plots(df):
 
-def individual_model_plots(model, df):
-    print(f"Plotting for {model}")
+    df = df \
+        .withColumn("Model", when(col("Model") == "aaraki/vit-base-patch16-224-in21k-finetuned-cifar10", "ViT") \
+                    .otherwise(df.model)) \
+        .withColumn("Model", when(col("Model") == "tzhao3/DeiT-CIFAR10", "DeiT") \
+                    .otherwise(col("Model"))) \
+        .withColumn("Model", when(col("Model") == "ahsanjavid/convnext-tiny-finetuned-cifar10", "ConvNext") \
+                    .otherwise(col("Model"))) \
+        .withColumn("Model", when(col("Model") == "facebook/convnextv2-tiny-22k-224", "ConvNextV2") \
+                    .otherwise(col("Model"))) \
+        .filter((col("Model") == "ViT") | (col("Model") == "DeiT") | (col("Model") == "ConvNext") |
+                (col("Model") == "ConvNextV2")) \
+        .withColumn("env", when(col("env") == 'cpu', "LINUX_CPU") \
+                    .otherwise(when(col("env") == 'mac_cpu', "MAC_CPU")
+                               .otherwise(when(col("env") == 'cuda', "LINUX_CUDA")
+                                          .otherwise(col("env"))))) \
+        .select(col("Model"), col("batch_size").alias("Batch_size"),
+                col("average_batch_duration").alias("Average_batch_duration (Sec)"), col("env").alias("Env"))
 
-    model_df = df.filter(col("model") == model).\
-        select("duration", "batch_size", "average_batch_duration", "env")
+    # df.show(400, truncate=False)
+    plt.style.use('seaborn-v0_8-darkgrid')
+    fig, ax = plt.subplots(figsize=(10, 8))
 
-    model_df.show(truncate=False)
-
-    for compare in ["duration", "average_batch_duration"]:
-        sns.lineplot(data=model_df.toPandas(), x="batch_size", y=compare, hue='env', palette="flare")
-        plt.show()
-        sns.barplot(data=model_df.toPandas(), x="batch_size", y=compare, hue="env", estimator="sum",
-                    errorbar=None)
-        plt.show()
+    ax = sns.lineplot(data=df.toPandas(), x="Batch_size", y="Average_batch_duration (Sec)", hue="Model", style="Env", ax=ax)
+    sns.move_legend(ax, "upper right", bbox_to_anchor=(0.2, 1))
+    # plt.savefig(f"results/Average_batch_duration")
+    plt.show()
 
 
 def validate_baseline_test(df_test_comparison):
@@ -204,22 +268,59 @@ def validate_baseline_test(df_test_comparison):
 
 def test_plots(df):
 
-    vit_model_df = df.select("duration", "total_images", "average_batch_duration", "env")
+    vit_model_df = df.select(col("duration").alias("Duration (Sec)"), col("total_images").alias("Test_size"),
+                             col("env").alias("Env"))\
+                    .withColumn("Env", when(col("env") == 'cpu', "LINUX_CPU")\
+                    .otherwise(when(col("Env") == 'mac_cpu', "MAC_CPU")
+                               .otherwise(when(col("Env") == 'cuda', "LINUX_CUDA")
+                               .otherwise(col("Env")))))
 
-    for compare in ["duration", "average_batch_duration"]:
-        sns.lineplot(data=vit_model_df.toPandas(), x="total_images", y=compare, hue='env', palette="flare")
-        plt.show()
-        sns.barplot(data=vit_model_df.toPandas(), x="total_images", y=compare, hue="env", estimator="sum",
-                    errorbar=None)
-        plt.show()
+    plt.style.use('seaborn-v0_8-darkgrid')
+    sns.lineplot(data=vit_model_df.toPandas(), x="Test_size", y="Duration (Sec)", hue='Env', style="Env")
+    plt.title("ViT Model")
+    # plt.savefig(f"results/Test_size_duration")
+    plt.show()
 
 
 #################################### Streaming analysis ####################################
 
 
 def streaming_analysis(spark):
-    pass
-    ##TODO:: Plot the graphs from DFs using pandas & sns
+
+    files = glob.glob("results/streaming/speed_5_batch_5/*/*.json")
+    dfs = None
+    for tracker in files:
+        details = tracker.split("/")[-2]
+        model = details.split('_')[0]
+        env = "MAC_CPU" if details.split('_')[1] == "cpu" else "LINUX_GPU"
+        df = spark.read.json(tracker)
+        df = df.select(col("batch_id"), col("batch_size"), col("accuracy"),
+                col("triggered"),select_cast('triggered').alias('triggered_time'),
+                col("start"), select_cast('start').alias('start_time'),
+                col("end"), select_cast('end').alias('end_time')).\
+                withColumn("Model", lit(model)).withColumn("Env", lit(env))
+
+        if not dfs:
+            dfs = df
+        else:
+            dfs = dfs.union(df)
+
+    # dfs.show(500, truncate=False)
+
+    dfs = dfs.withColumn("Latency", col("start") - col("triggered"))\
+        .withColumn("Throughput", col("batch_size") / (col("end") - col("start")))\
+        .select(col("Model"), col("Env"), col("batch_size").alias("Images"), col("accuracy"), col("triggered_time"),
+                col("start_time"), col("end_time"), col("Latency"), col("Throughput")).orderBy(col("Model"))
+
+    # dfs.show(500, truncate=False)
+    plt.style.use('seaborn-v0_8-darkgrid')
+    sns.lineplot(data=dfs.toPandas(), x="Images", y="Latency", hue="Model", style="Env")
+    # plt.savefig(f"results/Latency")
+    plt.show()
+    plt.style.use('seaborn-v0_8-darkgrid')
+    sns.lineplot(data=dfs.toPandas(), x="Images", y="Throughput", hue="Model", style="Env")
+    # plt.savefig(f"results/Throughput")
+    plt.show()
 
 
 if __name__ == "__main__":
@@ -232,8 +333,10 @@ if __name__ == "__main__":
 
     # collect_training_results(spark)
 
+    analyse_training_results(spark)
+
     analyse_inference(spark)
 
-    # streaming_analysis(spark)
+    streaming_analysis(spark)
 
     spark.stop()

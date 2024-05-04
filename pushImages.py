@@ -77,13 +77,12 @@ def push(type, interval, stop):
             num_batch += type[1]
 
         images_to_push = []
-
+        log(batch_id, num_batch)
         for _ in range(num_batch):
             random_index = random.randint(1, size)
             images_to_push.append(complete_dataset[random_index])
 
         send_images(batch_id, images_to_push)
-        log(batch_id, len(images_to_push))
         print(f"Pushed {batch_id} data")
         batch_id += 1
         stop -= 1
@@ -94,13 +93,13 @@ if __name__ == '__main__':
     push_types = [
         ("constant", 50),
         ("random", (50, 200)),
-        ("increasing", 50)
+        ("increasing", 5)
     ]
 
-    interval = 20
-    stop = 20
+    interval = 5
+    stop = 16
     clear_pushes()
     print("Starting pushing...")
     time.sleep(5)
 
-    push(push_types[0], interval, stop)
+    push(push_types[2], interval, stop)

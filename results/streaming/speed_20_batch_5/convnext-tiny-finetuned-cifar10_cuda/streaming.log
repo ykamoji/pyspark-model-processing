@@ -1,0 +1,1068 @@
+2024-05-03 20:45:53.237204: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2024-05-03 20:45:53.237288: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2024-05-03 20:45:53.239152: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-05-03 20:45:57.853502: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py:1132: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Could not find image processor class in the image processor config or the model config. Loading based on pattern matching with the model's feature extractor configuration. Please open a PR/issue to update `preprocessor_config.json` to use `image_processor_type` instead of `feature_extractor_type`. This warning will be removed in v4.40.
+/usr/lib/python3.10/subprocess.py:1796: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = _posixsubprocess.fork_exec(
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+24/05/03 20:46:17 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/05/03 20:46:20 WARN Utils: Service 'SparkUI' could not bind on port 4050. Attempting port 4051.
+root
+ |-- idx: integer (nullable = true)
+ |-- data: array (nullable = true)
+ |    |-- element: integer (containsNull = true)
+ |-- label: integer (nullable = true)
+
+[Stage 0:>                                                                              (0 + 1) / 1]                                                                                                    1: start = 1714769190.9520845
+[Stage 2:>                                                                              (0 + 2) / 2]2024-05-03 20:46:37.441887: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2024-05-03 20:46:37.442102: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2024-05-03 20:46:37.444177: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-05-03 20:46:38.117118: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2024-05-03 20:46:38.117258: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2024-05-03 20:46:38.119187: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-05-03 20:46:39.841745: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2024-05-03 20:46:40.099607: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+[Stage 2:=======================================>                                       (1 + 1) / 2]                                                                                                    --------------------------------------------------
+Batch 1
+--------------------------------------------------
+truck : True
+bird : True
+horse : True
+dog : True
+bird : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+1: start = 1714769190.9520845, end = 1714769211.8352127
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |0.0     |2024-05-03 20:46:41.222864|-                         |-                         |cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+2: start = 1714769218.762443
+[Stage 8:>                                                                              (0 + 2) / 2]                                                                                                    --------------------------------------------------
+Batch 2
+--------------------------------------------------
+bird : True
+bird : True
+horse : True
+bird : True
+deer : True
+horse : True
+dog : True
+automobile : True
+ship : True
+horse : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+2: start = 1714769218.762443, end = 1714769221.6011324
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+3: start = 1714769232.8356748
+[Stage 14:>                                                                             (0 + 2) / 2]                                                                                                    --------------------------------------------------
+Batch 3
+--------------------------------------------------
+automobile : True
+deer : True
+ship : True
+truck : True
+bird : True
+cat : True
+bird : True
+truck : True
+dog : True
+airplane : True
+frog : True
+deer : True
+ship : True
+ship : True
+frog : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+3: start = 1714769232.8356748, end = 1714769236.8617766
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+4: start = 1714769258.401407
+[Stage 20:>                                                                             (0 + 2) / 2][Stage 20:=======================================>                                      (1 + 1) / 2]                                                                                                    --------------------------------------------------
+Batch 4
+--------------------------------------------------
+cat : True
+truck : True
+truck : True
+deer : True
+horse : True
+frog : True
+ship : True
+ship : True
+ship : True
+deer : True
+ship : True
+bird : True
+deer : True
+deer : True
+dog : True
+horse : True
+dog : True
+frog : True
+bird : True
+dog : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+4: start = 1714769258.401407, end = 1714769263.046181
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+5: start = 1714769284.2907298
+[Stage 26:>                                                                             (0 + 2) / 2][Stage 26:=======================================>                                      (1 + 1) / 2]                                                                                                    --------------------------------------------------
+Batch 5
+--------------------------------------------------
+cat : True
+automobile : True
+bird : True
+cat : True
+airplane : True
+dog : True
+automobile : True
+ship : True
+truck : True
+bird : True
+cat : True
+cat : True
+dog : True
+airplane : True
+frog : True
+cat : True
+frog : True
+dog : True
+airplane : True
+dog : False
+automobile : True
+airplane : True
+dog : True
+automobile : True
+bird : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+5: start = 1714769284.2907298, end = 1714769289.4161942
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+6: start = 1714769311.2443693
+[Stage 32:>                                                                             (0 + 2) / 2]                                                                                                    --------------------------------------------------
+Batch 6
+--------------------------------------------------
+truck : True
+truck : True
+truck : True
+dog : True
+cat : True
+automobile : True
+airplane : True
+dog : True
+truck : True
+airplane : True
+horse : True
+frog : True
+frog : True
+dog : True
+horse : True
+dog : True
+bird : True
+truck : True
+deer : True
+airplane : True
+deer : True
+automobile : True
+truck : True
+bird : True
+truck : True
+airplane : True
+airplane : True
+cat : True
+truck : True
+cat : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+6: start = 1714769311.2443693, end = 1714769315.2536163
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+7: start = 1714769335.7895682
+[Stage 38:>                                                                             (0 + 2) / 2][Stage 38:=======================================>                                      (1 + 1) / 2]                                                                                                    --------------------------------------------------
+Batch 7
+--------------------------------------------------
+dog : True
+ship : True
+truck : True
+airplane : True
+truck : True
+deer : True
+horse : True
+dog : True
+cat : True
+bird : True
+cat : True
+cat : True
+bird : True
+dog : True
+truck : True
+airplane : True
+dog : False
+bird : True
+airplane : True
+frog : True
+dog : True
+automobile : True
+airplane : True
+dog : True
+horse : True
+airplane : True
+automobile : True
+frog : True
+deer : True
+bird : True
+frog : True
+cat : True
+bird : True
+airplane : True
+dog : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+7: start = 1714769335.7895682, end = 1714769339.7695324
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
+|7       |35        |97.143  |2024-05-03 20:48:56.06972 |2024-05-03 20:48:55.789568|2024-05-03 20:48:59.769532|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+8: start = 1714769361.0931137
+[Stage 44:>                                                                             (0 + 2) / 2]                                                                                                    --------------------------------------------------
+Batch 8
+--------------------------------------------------
+cat : True
+dog : True
+horse : True
+automobile : True
+ship : True
+horse : True
+deer : True
+ship : True
+horse : True
+truck : True
+automobile : True
+truck : True
+airplane : True
+truck : True
+truck : True
+airplane : True
+airplane : True
+ship : True
+dog : True
+frog : True
+bird : True
+ship : True
+automobile : True
+bird : True
+automobile : True
+cat : True
+bird : True
+truck : True
+bird : True
+automobile : True
+cat : True
+airplane : True
+deer : True
+truck : True
+frog : True
+airplane : True
+frog : True
+frog : True
+horse : True
+frog : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+8: start = 1714769361.0931137, end = 1714769364.8953009
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
+|7       |35        |97.143  |2024-05-03 20:48:56.06972 |2024-05-03 20:48:55.789568|2024-05-03 20:48:59.769532|cuda|
+|8       |40        |100.0   |2024-05-03 20:49:21.536201|2024-05-03 20:49:21.093113|2024-05-03 20:49:24.8953  |cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+9: start = 1714769385.9694593
+[Stage 50:>                                                                             (0 + 2) / 2]                                                                                                    --------------------------------------------------
+Batch 9
+--------------------------------------------------
+airplane : True
+horse : True
+airplane : True
+horse : True
+airplane : True
+frog : True
+airplane : True
+cat : True
+frog : True
+bird : True
+dog : True
+truck : True
+dog : True
+automobile : True
+automobile : True
+bird : True
+dog : True
+airplane : True
+automobile : True
+automobile : True
+bird : True
+truck : False
+automobile : True
+automobile : True
+cat : True
+ship : True
+bird : True
+ship : True
+horse : True
+dog : True
+truck : True
+horse : True
+airplane : True
+dog : True
+cat : True
+ship : True
+dog : True
+truck : True
+automobile : True
+deer : True
+ship : True
+ship : True
+dog : True
+automobile : True
+deer : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+9: start = 1714769385.9694593, end = 1714769390.0395086
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
+|7       |35        |97.143  |2024-05-03 20:48:56.06972 |2024-05-03 20:48:55.789568|2024-05-03 20:48:59.769532|cuda|
+|8       |40        |100.0   |2024-05-03 20:49:21.536201|2024-05-03 20:49:21.093113|2024-05-03 20:49:24.8953  |cuda|
+|9       |45        |97.778  |2024-05-03 20:49:46.096778|2024-05-03 20:49:45.969459|2024-05-03 20:49:50.039508|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+10: start = 1714769411.2303247
+[Stage 56:>                                                                             (0 + 2) / 2][Stage 56:=======================================>                                      (1 + 1) / 2]                                                                                                    --------------------------------------------------
+Batch 10
+--------------------------------------------------
+airplane : True
+automobile : True
+frog : True
+truck : True
+deer : True
+frog : True
+ship : True
+bird : True
+dog : True
+bird : True
+automobile : True
+bird : True
+ship : True
+automobile : True
+truck : True
+ship : True
+horse : True
+deer : True
+deer : True
+horse : True
+automobile : True
+horse : True
+truck : True
+deer : True
+airplane : True
+automobile : True
+airplane : True
+ship : True
+frog : True
+truck : True
+truck : True
+horse : False
+frog : True
+cat : True
+frog : True
+dog : True
+ship : True
+horse : True
+deer : True
+airplane : True
+dog : True
+deer : True
+cat : True
+ship : True
+dog : True
+bird : True
+frog : True
+truck : True
+ship : True
+bird : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+10: start = 1714769411.2303247, end = 1714769417.6076994
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
+|7       |35        |97.143  |2024-05-03 20:48:56.06972 |2024-05-03 20:48:55.789568|2024-05-03 20:48:59.769532|cuda|
+|8       |40        |100.0   |2024-05-03 20:49:21.536201|2024-05-03 20:49:21.093113|2024-05-03 20:49:24.8953  |cuda|
+|9       |45        |97.778  |2024-05-03 20:49:46.096778|2024-05-03 20:49:45.969459|2024-05-03 20:49:50.039508|cuda|
+|10      |50        |98.0    |2024-05-03 20:50:11.20682 |2024-05-03 20:50:11.230324|2024-05-03 20:50:17.607699|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+11: start = 1714769437.304381
+[Stage 62:>                                                                             (0 + 2) / 2][Stage 62:=======================================>                                      (1 + 1) / 2]                                                                                                    --------------------------------------------------
+Batch 11
+--------------------------------------------------
+bird : True
+bird : True
+truck : True
+frog : True
+horse : True
+ship : True
+ship : False
+deer : True
+horse : True
+bird : False
+cat : True
+deer : True
+truck : True
+frog : True
+airplane : True
+frog : True
+ship : True
+horse : True
+automobile : True
+dog : True
+frog : True
+airplane : True
+frog : True
+automobile : True
+frog : True
+cat : False
+frog : True
+ship : True
+dog : True
+truck : True
+automobile : True
+ship : True
+deer : True
+horse : True
+bird : True
+truck : True
+bird : True
+truck : True
+horse : True
+cat : True
+horse : True
+cat : True
+cat : True
+frog : True
+horse : True
+bird : True
+automobile : True
+automobile : True
+frog : True
+cat : True
+frog : True
+dog : True
+frog : True
+frog : True
+dog : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+11: start = 1714769437.304381, end = 1714769442.3220756
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
+|7       |35        |97.143  |2024-05-03 20:48:56.06972 |2024-05-03 20:48:55.789568|2024-05-03 20:48:59.769532|cuda|
+|8       |40        |100.0   |2024-05-03 20:49:21.536201|2024-05-03 20:49:21.093113|2024-05-03 20:49:24.8953  |cuda|
+|9       |45        |97.778  |2024-05-03 20:49:46.096778|2024-05-03 20:49:45.969459|2024-05-03 20:49:50.039508|cuda|
+|10      |50        |98.0    |2024-05-03 20:50:11.20682 |2024-05-03 20:50:11.230324|2024-05-03 20:50:17.607699|cuda|
+|11      |55        |94.545  |2024-05-03 20:50:37.561246|2024-05-03 20:50:37.304381|2024-05-03 20:50:42.322075|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+12: start = 1714769463.3365226
+[Stage 68:>                                                                             (0 + 2) / 2][Stage 68:=======================================>                                      (1 + 1) / 2]                                                                                                    --------------------------------------------------
+Batch 12
+--------------------------------------------------
+ship : True
+deer : True
+truck : True
+frog : True
+automobile : True
+bird : True
+truck : True
+cat : True
+truck : True
+airplane : True
+frog : True
+deer : True
+bird : True
+airplane : True
+horse : True
+dog : True
+ship : True
+horse : True
+ship : True
+frog : True
+bird : True
+automobile : True
+bird : True
+bird : True
+bird : True
+automobile : True
+dog : True
+frog : True
+truck : True
+cat : True
+ship : True
+airplane : True
+bird : True
+dog : True
+dog : True
+truck : True
+automobile : True
+automobile : True
+frog : True
+airplane : True
+ship : True
+dog : True
+horse : True
+cat : True
+ship : True
+frog : True
+bird : True
+automobile : True
+frog : True
+frog : True
+dog : True
+dog : True
+cat : True
+automobile : True
+deer : True
+dog : True
+cat : True
+ship : True
+airplane : True
+ship : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+12: start = 1714769463.3365226, end = 1714769468.50457
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
+|7       |35        |97.143  |2024-05-03 20:48:56.06972 |2024-05-03 20:48:55.789568|2024-05-03 20:48:59.769532|cuda|
+|8       |40        |100.0   |2024-05-03 20:49:21.536201|2024-05-03 20:49:21.093113|2024-05-03 20:49:24.8953  |cuda|
+|9       |45        |97.778  |2024-05-03 20:49:46.096778|2024-05-03 20:49:45.969459|2024-05-03 20:49:50.039508|cuda|
+|10      |50        |98.0    |2024-05-03 20:50:11.20682 |2024-05-03 20:50:11.230324|2024-05-03 20:50:17.607699|cuda|
+|11      |55        |94.545  |2024-05-03 20:50:37.561246|2024-05-03 20:50:37.304381|2024-05-03 20:50:42.322075|cuda|
+|12      |60        |100.0   |2024-05-03 20:51:03.587834|2024-05-03 20:51:03.336522|2024-05-03 20:51:08.50457 |cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+13: start = 1714769489.0537841
+[Stage 74:>                                                                             (0 + 2) / 2][Stage 74:=======================================>                                      (1 + 1) / 2]                                                                                                    --------------------------------------------------
+Batch 13
+--------------------------------------------------
+dog : True
+airplane : True
+cat : True
+bird : True
+bird : True
+deer : True
+dog : True
+deer : True
+ship : True
+airplane : True
+ship : True
+truck : True
+ship : True
+frog : True
+horse : True
+frog : True
+ship : True
+ship : True
+deer : True
+automobile : True
+horse : True
+truck : True
+cat : True
+cat : True
+horse : True
+airplane : True
+automobile : True
+automobile : True
+dog : False
+airplane : True
+cat : True
+automobile : True
+bird : True
+airplane : True
+cat : True
+cat : True
+automobile : True
+horse : True
+automobile : True
+ship : True
+cat : True
+airplane : True
+frog : True
+airplane : True
+airplane : True
+ship : True
+automobile : True
+deer : True
+truck : True
+horse : True
+horse : True
+dog : True
+deer : True
+deer : True
+frog : True
+horse : True
+ship : True
+dog : True
+deer : True
+ship : True
+truck : True
+ship : True
+cat : True
+cat : True
+frog : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+13: start = 1714769489.0537841, end = 1714769494.2144592
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
+|7       |35        |97.143  |2024-05-03 20:48:56.06972 |2024-05-03 20:48:55.789568|2024-05-03 20:48:59.769532|cuda|
+|8       |40        |100.0   |2024-05-03 20:49:21.536201|2024-05-03 20:49:21.093113|2024-05-03 20:49:24.8953  |cuda|
+|9       |45        |97.778  |2024-05-03 20:49:46.096778|2024-05-03 20:49:45.969459|2024-05-03 20:49:50.039508|cuda|
+|10      |50        |98.0    |2024-05-03 20:50:11.20682 |2024-05-03 20:50:11.230324|2024-05-03 20:50:17.607699|cuda|
+|11      |55        |94.545  |2024-05-03 20:50:37.561246|2024-05-03 20:50:37.304381|2024-05-03 20:50:42.322075|cuda|
+|12      |60        |100.0   |2024-05-03 20:51:03.587834|2024-05-03 20:51:03.336522|2024-05-03 20:51:08.50457 |cuda|
+|13      |65        |98.462  |2024-05-03 20:51:29.170818|2024-05-03 20:51:29.053784|2024-05-03 20:51:34.214459|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+14: start = 1714769513.7628758
+[Stage 80:>                                                                             (0 + 2) / 2]                                                                                                    --------------------------------------------------
+Batch 14
+--------------------------------------------------
+horse : True
+dog : True
+airplane : True
+bird : True
+automobile : True
+truck : True
+bird : True
+airplane : True
+truck : True
+ship : True
+ship : True
+deer : True
+bird : True
+frog : True
+truck : True
+dog : True
+automobile : True
+horse : True
+truck : True
+cat : True
+automobile : True
+automobile : True
+frog : True
+ship : True
+airplane : True
+dog : True
+airplane : True
+airplane : True
+frog : True
+airplane : True
+deer : True
+airplane : True
+cat : True
+deer : True
+dog : True
+frog : True
+frog : True
+frog : True
+horse : True
+airplane : True
+dog : True
+dog : True
+deer : True
+truck : True
+airplane : True
+automobile : True
+airplane : True
+cat : True
+deer : True
+automobile : True
+dog : True
+dog : True
+automobile : True
+ship : True
+frog : True
+airplane : True
+ship : True
+deer : True
+frog : True
+automobile : True
+airplane : True
+automobile : True
+automobile : True
+deer : True
+ship : True
+bird : True
+airplane : True
+dog : True
+automobile : True
+airplane : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+14: start = 1714769513.7628758, end = 1714769518.5406039
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
+|7       |35        |97.143  |2024-05-03 20:48:56.06972 |2024-05-03 20:48:55.789568|2024-05-03 20:48:59.769532|cuda|
+|8       |40        |100.0   |2024-05-03 20:49:21.536201|2024-05-03 20:49:21.093113|2024-05-03 20:49:24.8953  |cuda|
+|9       |45        |97.778  |2024-05-03 20:49:46.096778|2024-05-03 20:49:45.969459|2024-05-03 20:49:50.039508|cuda|
+|10      |50        |98.0    |2024-05-03 20:50:11.20682 |2024-05-03 20:50:11.230324|2024-05-03 20:50:17.607699|cuda|
+|11      |55        |94.545  |2024-05-03 20:50:37.561246|2024-05-03 20:50:37.304381|2024-05-03 20:50:42.322075|cuda|
+|12      |60        |100.0   |2024-05-03 20:51:03.587834|2024-05-03 20:51:03.336522|2024-05-03 20:51:08.50457 |cuda|
+|13      |65        |98.462  |2024-05-03 20:51:29.170818|2024-05-03 20:51:29.053784|2024-05-03 20:51:34.214459|cuda|
+|14      |70        |100.0   |2024-05-03 20:51:54.01581 |2024-05-03 20:51:53.762875|2024-05-03 20:51:58.540604|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+14: start = 1714769538.346351
+[Stage 86:>                                                                             (0 + 2) / 2]                                                                                                    --------------------------------------------------
+Batch 14
+--------------------------------------------------
+airplane : True
+bird : True
+truck : True
+deer : True
+bird : True
+frog : True
+automobile : True
+dog : True
+ship : True
+cat : True
+dog : True
+horse : True
+horse : True
+cat : True
+truck : True
+horse : True
+bird : True
+horse : False
+bird : True
+bird : True
+dog : True
+bird : True
+ship : True
+airplane : True
+frog : True
+bird : True
+airplane : True
+ship : True
+automobile : True
+airplane : True
+deer : True
+automobile : True
+ship : True
+automobile : True
+bird : True
+horse : True
+truck : True
+automobile : True
+airplane : True
+frog : True
+cat : True
+deer : True
+frog : True
+horse : True
+bird : True
+cat : True
+ship : True
+ship : True
+frog : True
+bird : True
+cat : True
+dog : True
+airplane : True
+dog : True
+automobile : True
+automobile : True
+bird : True
+bird : True
+bird : True
+bird : True
+truck : True
+airplane : True
+truck : True
+frog : True
+horse : True
+dog : True
+bird : True
+ship : True
+dog : True
+ship : True
+frog : True
+automobile : True
+cat : True
+automobile : True
+frog : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+14: start = 1714769538.346351, end = 1714769542.7439654
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
+|7       |35        |97.143  |2024-05-03 20:48:56.06972 |2024-05-03 20:48:55.789568|2024-05-03 20:48:59.769532|cuda|
+|8       |40        |100.0   |2024-05-03 20:49:21.536201|2024-05-03 20:49:21.093113|2024-05-03 20:49:24.8953  |cuda|
+|9       |45        |97.778  |2024-05-03 20:49:46.096778|2024-05-03 20:49:45.969459|2024-05-03 20:49:50.039508|cuda|
+|10      |50        |98.0    |2024-05-03 20:50:11.20682 |2024-05-03 20:50:11.230324|2024-05-03 20:50:17.607699|cuda|
+|11      |55        |94.545  |2024-05-03 20:50:37.561246|2024-05-03 20:50:37.304381|2024-05-03 20:50:42.322075|cuda|
+|12      |60        |100.0   |2024-05-03 20:51:03.587834|2024-05-03 20:51:03.336522|2024-05-03 20:51:08.50457 |cuda|
+|13      |65        |98.462  |2024-05-03 20:51:29.170818|2024-05-03 20:51:29.053784|2024-05-03 20:51:34.214459|cuda|
+|14      |70        |98.667  |2024-05-03 20:51:54.01581 |2024-05-03 20:52:18.346351|2024-05-03 20:52:22.743965|cuda|
+|15      |75        |0.0     |2024-05-03 20:52:18.787737|-                         |-                         |cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
+16: start = 1714769563.31573
+[Stage 92:>                                                                             (0 + 2) / 2][Stage 92:=======================================>                                      (1 + 1) / 2]                                                                                                    --------------------------------------------------
+Batch 16
+--------------------------------------------------
+horse : True
+truck : True
+horse : True
+frog : True
+truck : True
+automobile : True
+frog : True
+dog : True
+airplane : True
+frog : True
+automobile : True
+airplane : True
+bird : True
+horse : True
+bird : True
+horse : True
+ship : True
+deer : True
+truck : True
+dog : True
+frog : True
+airplane : True
+truck : True
+cat : True
+bird : True
+frog : True
+ship : True
+cat : True
+airplane : True
+horse : True
+dog : True
+dog : True
+truck : True
+dog : False
+truck : True
+deer : True
+bird : True
+deer : True
+automobile : True
+airplane : True
+deer : True
+cat : True
+deer : True
+automobile : True
+deer : True
+truck : True
+frog : True
+airplane : True
+truck : True
+ship : True
+frog : True
+horse : True
+deer : True
+deer : True
+horse : True
+deer : True
+cat : True
+ship : True
+deer : True
+dog : True
+cat : True
+deer : True
+airplane : True
+deer : True
+airplane : True
+truck : True
+ship : True
+bird : True
+horse : True
+dog : True
+truck : True
+airplane : True
+automobile : True
+automobile : True
+deer : True
+cat : True
+airplane : True
+truck : True
+truck : True
+bird : True
+--------------------------------------------------
+--------------------------------------------------
+
+
+16: start = 1714769563.31573, end = 1714769567.3030953
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|batch_id|batch_size|accuracy|triggered                 |start                     |end                       |env |
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+|1       |5         |100.0   |2024-05-03 20:46:06.281203|2024-05-03 20:46:30.952084|2024-05-03 20:46:51.835212|cuda|
+|2       |10        |100.0   |2024-05-03 20:46:41.222864|2024-05-03 20:46:58.762443|2024-05-03 20:47:01.601132|cuda|
+|3       |15        |100.0   |2024-05-03 20:47:12.604817|2024-05-03 20:47:12.835674|2024-05-03 20:47:16.861776|cuda|
+|4       |20        |100.0   |2024-05-03 20:47:38.578341|2024-05-03 20:47:38.401407|2024-05-03 20:47:43.046181|cuda|
+|5       |25        |96.0    |2024-05-03 20:48:04.61104 |2024-05-03 20:48:04.290729|2024-05-03 20:48:09.416194|cuda|
+|6       |30        |100.0   |2024-05-03 20:48:31.396321|2024-05-03 20:48:31.244369|2024-05-03 20:48:35.253616|cuda|
+|7       |35        |97.143  |2024-05-03 20:48:56.06972 |2024-05-03 20:48:55.789568|2024-05-03 20:48:59.769532|cuda|
+|8       |40        |100.0   |2024-05-03 20:49:21.536201|2024-05-03 20:49:21.093113|2024-05-03 20:49:24.8953  |cuda|
+|9       |45        |97.778  |2024-05-03 20:49:46.096778|2024-05-03 20:49:45.969459|2024-05-03 20:49:50.039508|cuda|
+|10      |50        |98.0    |2024-05-03 20:50:11.20682 |2024-05-03 20:50:11.230324|2024-05-03 20:50:17.607699|cuda|
+|11      |55        |94.545  |2024-05-03 20:50:37.561246|2024-05-03 20:50:37.304381|2024-05-03 20:50:42.322075|cuda|
+|12      |60        |100.0   |2024-05-03 20:51:03.587834|2024-05-03 20:51:03.336522|2024-05-03 20:51:08.50457 |cuda|
+|13      |65        |98.462  |2024-05-03 20:51:29.170818|2024-05-03 20:51:29.053784|2024-05-03 20:51:34.214459|cuda|
+|14      |70        |98.667  |2024-05-03 20:51:54.01581 |2024-05-03 20:52:18.346351|2024-05-03 20:52:22.743965|cuda|
+|15      |75        |0.0     |2024-05-03 20:52:18.787737|-                         |-                         |cuda|
+|16      |80        |98.75   |2024-05-03 20:52:43.578981|2024-05-03 20:52:43.31573 |2024-05-03 20:52:47.303095|cuda|
++--------+----------+--------+--------------------------+--------------------------+--------------------------+----+
+
