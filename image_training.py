@@ -65,6 +65,7 @@ def build_metrics():
 
     return compute_metrics
 
+
 def collate_fn(batch):
     return {
         'pixel_values': torch.stack([x['pixel_values'] for x in batch]),

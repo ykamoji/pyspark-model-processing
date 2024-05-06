@@ -5,7 +5,7 @@ import random
 import time
 import json
 from pyspark.sql import SparkSession
-from utils import createDataSet, streaming_schema
+from utils import createImageDataSet, streaming_schema
 
 dataset_path = '/Users/ykamoji/Documents/ImageDatabase/cifar-10-batches-py/'
 output_path = 'streams/input/'
@@ -57,7 +57,7 @@ def send_images(batch_id, images_to_push):
 
 
 def push(type, interval, stop):
-    train_dataset, test_dataset, _ = createDataSet(dataset_path)
+    train_dataset, test_dataset, _ = createImageDataSet(dataset_path)
 
     complete_dataset = train_dataset
     complete_dataset.extend(test_dataset)

@@ -1,6 +1,11 @@
 import pickle
+import torch
+import pandas as pd
+from transformers import AutoTokenizer
 from pyspark.sql.types import StructType, IntegerType, StructField, TimestampType, FloatType, StringType
 from pyspark.sql.functions import col
+
+tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased')
 
 conv_model_list = [
     "facebook/convnext-tiny-224",
@@ -54,7 +59,7 @@ model_details = {
 }
 
 
-def createDataSet(dataset_path):
+def createImageDataSet(dataset_path):
     train_dataset = []
     test_dataset = []
     for i in range(1, 6):
@@ -69,16 +74,51 @@ def createDataSet(dataset_path):
     return train_dataset, test_dataset, label_map
 
 
+def createTextDataset(dataset_path):
+    # The dataset is stored as a CSV file with 'Content' and 'Label' columns
+    data = pd.read_csv(dataset_path)
+
+    # Shuffle the dataset to ensure random distribution for splitting
+    data = data.sample(frac=1).reset_index(drop=True)
+
+    # Split the dataset into training and testing sets
+    train_data = data.sample(frac=0.98, random_state=42)  # 80% for training
+    test_data = data.drop(train_data.index)  # Remaining 20% for testing
+
+    # Extract content and labels for training
+    train_dataset = [(row['Content'], row['Label']) for index, row in train_data.iterrows()]
+    test_dataset = [(row['Content'], row['Label']) for index, row in test_data.iterrows()]
+
+    return train_dataset, test_dataset
+
+
 def get_label_map(dataset_path):
     meta = pickle.load(open(dataset_path + f'batches.meta', 'rb'), encoding='latin-1')
     return {index: label for index, label in enumerate(meta['label_names'])}
 
 
-def collate_fn(images, labels):
+def collate_image_fn(images, labels):
     return {
         'pixel_values': images['pixel_values'],
         'labels': labels
     }
+
+
+def collate_text_fn(batch):
+    texts = [item[0] for item in batch]  # first element is text
+    labels = [item[1] for item in batch]  # second element is label
+
+    # Ensure labels are integers
+    labels = torch.tensor([int(label) if isinstance(label, str) else label for label in labels], dtype=torch.long)
+
+    # Tokenize the batch of texts
+    encodings = tokenizer(texts, padding=True, truncation=True, return_tensors="pt")
+
+    # Merge everything into a single dictionary
+    batch = {key: val for key, val in encodings.items()}
+    batch['labels'] = labels
+
+    return batch
 
 
 def select_cast(column):
