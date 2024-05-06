@@ -1,4 +1,4 @@
-import os.path
+import os
 from transformers import AutoProcessor, AutoModelForImageClassification
 import torch
 import numpy as np
@@ -8,7 +8,12 @@ import pyspark.sql.functions as F
 from pyspark.sql.types import *
 import time
 
-dataset_path = '/Users/ykamoji/Documents/ImageDatabase/cifar-10-batches-py/'
+## To download the CIFAR10 dataset, run below two commands
+# !wget -c https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+# !tar -xvzf cifar-10-python.tar.gz
+# Update the below path after downloading the files
+dataset_path = os.getcwd() + '/cifar-10-batches-py/'
+
 tracker_path = 'logs/tracker.json'
 
 label_map = get_label_map(dataset_path)
@@ -23,6 +28,11 @@ model.to(device)
 
 
 def reshape_image(record):
+    """
+    Preprocesses the images to compatible format required by the model.
+    :param record:
+    :return: data, label
+    """
     batch_id, image, label = record
     height = 32
     width = 32
@@ -32,6 +42,12 @@ def reshape_image(record):
 
 
 def predictImage(record):
+    """
+    Get predictions of the image classes bases on the ground truth labels.
+    Load input to the device: cpu or cuda
+    :param record:
+    :return: class label, prediction
+    """
     gt = record[1]
     class_label = label_map[gt]
     image = np.array(record[0]).reshape(32, 32, 3).astype(np.uint8)
@@ -42,7 +58,15 @@ def predictImage(record):
     pred = logits.argmax(-1).item()
     return class_label, True if gt == pred else False
 
+
 def processBatch(batch_df, query_batch_id):
+    """
+    Streaming function that will detect any new images added to the streaming directory and process it.
+    Updating the tracker with the results of the model evaluations.
+    :param batch_df:
+    :param query_batch_id:
+    :return:
+    """
 
     batch_id = batch_df.select("idx").first().idx
 
@@ -98,6 +122,10 @@ def processBatch(batch_df, query_batch_id):
     tracker_df.toPandas().to_json(tracker_path, orient='records', force_ascii=False, lines=True)
 
 def start_streaming():
+    """
+    Creates a PySpark streaming cluster.
+    :return:
+    """
     spark = SparkSession.builder. \
         appName("ImageDataStream"). \
         master("local[*]"). \

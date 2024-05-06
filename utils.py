@@ -60,6 +60,11 @@ model_details = {
 
 
 def createImageDataSet(dataset_path):
+    """
+    Creates the CIFAR10 dataset for model inputs.
+    :param dataset_path:
+    :return:
+    """
     train_dataset = []
     test_dataset = []
     for i in range(1, 6):

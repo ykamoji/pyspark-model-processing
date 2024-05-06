@@ -1,6 +1,6 @@
 import glob
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import lit, explode, col, desc, when, array, struct, concat
+from pyspark.sql.functions import lit, explode, col, desc, when, array, struct
 from pyspark.sql.types import StructType, StructField, IntegerType, ArrayType, FloatType, StringType
 from utils import model_details, select_cast
 import matplotlib.pyplot as plt
@@ -9,8 +9,14 @@ import seaborn as sns
 
 #################################### Training analysis ####################################
 def collect_training_results(spark):
+    """
+    Collect all the model training results and save the results into a csv file.
+    :param spark:
+    :return:
+    """
     training_logs = glob.glob("results/*/*/*/trainer_state.json", recursive=True)
 
+    # Define the schema of the results json
     log_history = StructType([
         StructField("loss", FloatType(), True),
         StructField("step", FloatType(), False),
@@ -38,6 +44,7 @@ def collect_training_results(spark):
 
     dfs = None
 
+    # Aggregating the results into unified dataframe
     for file in training_logs:
         model_group = file.split("/")[1] + '/'
         model_name = file.split("/")[2]
@@ -83,6 +90,12 @@ def collect_training_results(spark):
 
 
 def to_explode(df, by):
+    """
+     PySpark's transformation logic to translate columns values into key, value rows
+    :param df:
+    :param by:
+    :return: transformed df
+    """
     cols, dtypes = zip(*((c, t) for (c, t) in df.dtypes if c not in by))
     kvs = explode(array([
         struct(lit(c).alias("CATEGORY"), col(c).alias("Normalized_value")) for c in cols
@@ -91,6 +104,11 @@ def to_explode(df, by):
 
 
 def analyse_training_results(spark):
+    """
+    PySpark's transformations to plot the metrics graphs gathered from the training results.
+    :param spark:
+    :return:
+    """
 
     train_results_df = spark.read.option("header", True).csv("results/training_results.csv")
 
@@ -125,6 +143,7 @@ def analyse_training_results(spark):
 
     # train_results_df.show(100, truncate=False)
 
+    ## Plot the bar plots for GPU comparison
     for env in ["MAC_GPU", "LINUX_GPU"]:
         plt.style.use('seaborn-v0_8-darkgrid')
         ax = sns.barplot(train_results_df.filter(col("env") == env).toPandas(), x="CATEGORY", y="Normalized_value",
@@ -138,6 +157,11 @@ def analyse_training_results(spark):
 
 #################################### Inference analysis ####################################
 def analyse_inference(spark):
+    """
+    PySpark's transformations to plot the metrics graphs gathered from the inferences results.
+    :param spark:
+    :return:
+    """
 
     inference_schema = StructType([
         StructField("model", StringType(), False),
@@ -152,10 +176,13 @@ def analyse_inference(spark):
     df_batch_size_comparison = spark.read.option("header", True) \
         .schema(inference_schema).csv("results/inference_results_batch_size_comparison.csv")
 
+    # Validate that the model gives same accuracies for all batch sizes in all the environments:
+    # MAC CPU, LINUX GPU and LINUX CPU
     # validate_baseline_batch_size(df_batch_size_comparison)
 
     # train_results_df.show(100, truncate=False)
 
+    # Plot the Average batch duration graph
     individual_model_plots(df_batch_size_comparison)
 
     df_test_comparison = spark.read.option("header", True) \
@@ -163,13 +190,20 @@ def analyse_inference(spark):
 
     # df_test_comparison.show(truncate=False)
 
+    # Validate that the model gives same accuracies for all test images in all the environments:
+    # MAC CPU, LINUX GPU and LINUX CPU
     # validate_baseline_test(df_test_comparison)
 
+    # Plot the model test duration graph
     test_plots(df_test_comparison)
 
 
 def validate_baseline_batch_size(df_batch_size_comparison):
-
+    """
+    Displays all the unique model environment accuracies
+    :param df_batch_size_comparison:
+    :return:
+    """
     df_rdd = df_batch_size_comparison.rdd
 
     def model_env_acc_map(record):
@@ -203,7 +237,11 @@ def validate_baseline_batch_size(df_batch_size_comparison):
 
 
 def individual_model_plots(df):
-
+    """
+     PySpark's transformations to plot the metrics graphs gathered from the inferences results.
+    :param df:
+    :return:
+    """
     df = df \
         .withColumn("Model", when(col("Model") == "aaraki/vit-base-patch16-224-in21k-finetuned-cifar10", "ViT") \
                     .otherwise(df.model)) \
@@ -233,7 +271,11 @@ def individual_model_plots(df):
 
 
 def validate_baseline_test(df_test_comparison):
-
+    """
+    Displays all the unique model environment accuracies
+    :param df_test_comparison:
+    :return:
+    """
     df_rdd = df_test_comparison.rdd
 
     def test_env_acc_map(record):
@@ -267,7 +309,11 @@ def validate_baseline_test(df_test_comparison):
 
 
 def test_plots(df):
-
+    """
+     PySpark's transformations to plot the metrics graphs gathered from the inferences results.
+    :param df:
+    :return:
+    """
     vit_model_df = df.select(col("duration").alias("Duration (Sec)"), col("total_images").alias("Test_size"),
                              col("env").alias("Env"))\
                     .withColumn("Env", when(col("env") == 'cpu', "LINUX_CPU")\
@@ -286,7 +332,11 @@ def test_plots(df):
 
 
 def streaming_analysis(spark):
-
+    """
+    Plot the latency and throughput metrics graphs gathered from the streaming results.
+    :param spark:
+    :return:
+    """
     files = glob.glob("results/streaming/speed_5_batch_5/*/*.json")
     dfs = None
     for tracker in files:
@@ -331,7 +381,7 @@ if __name__ == "__main__":
         config("spark.driver.memory", "16G"). \
         getOrCreate()
 
-    # collect_training_results(spark)
+    collect_training_results(spark)
 
     analyse_training_results(spark)
 

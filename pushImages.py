@@ -7,7 +7,12 @@ import json
 from pyspark.sql import SparkSession
 from utils import createImageDataSet, streaming_schema
 
-dataset_path = '/Users/ykamoji/Documents/ImageDatabase/cifar-10-batches-py/'
+## To download the CIFAR10 dataset, run below two commands
+# !wget -c https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+# !tar -xvzf cifar-10-python.tar.gz
+# Update the below path after downloading the files
+dataset_path = os.getcwd() + '/cifar-10-batches-py/'
+
 output_path = 'streams/input/'
 output_archive = 'streams/archive'
 tracker_path = 'logs/tracker.json'
@@ -15,6 +20,10 @@ col_labels = ["batch_id", "batch_size", "triggered", "start", "end", "accuracy",
 
 
 def clear_pushes():
+    """
+    Clear the old files (if present) before pushing new images
+    :return:
+    """
     files = glob.glob(output_path+"*")
     for f in files:
         os.chmod(f, 0o777)
@@ -29,6 +38,12 @@ def clear_pushes():
 
 
 def log(batch_id, batch_size):
+    """
+    Creates a spark cluster to log the details of the images being pushed.
+    :param batch_id:
+    :param batch_size:
+    :return:
+    """
     spark = SparkSession.builder. \
         appName("ImageDataPush"). \
         master("local[*]"). \
@@ -49,6 +64,12 @@ def log(batch_id, batch_size):
 
 
 def send_images(batch_id, images_to_push):
+    """
+    Save the images to the streaming directory used by the other spark cluster.
+    :param batch_id:
+    :param images_to_push:
+    :return:
+    """
     json_dict = []
     for data, label in images_to_push:
         json_dict.append({"idx": batch_id, "data": data.tolist(), "label": label})
@@ -57,6 +78,13 @@ def send_images(batch_id, images_to_push):
 
 
 def push(type, interval, stop):
+    """
+    Triggers images based on the parameters given to the streaming directory
+    :param type: constant, random, increasing
+    :param interval: Speed of pushing the images
+    :param stop: Number of image triggers
+    :return:
+    """
     train_dataset, test_dataset, _ = createImageDataSet(dataset_path)
 
     complete_dataset = train_dataset

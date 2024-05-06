@@ -16,7 +16,11 @@ IGNORE_KEYS = ['cls_logits', 'distillation_logits', 'hidden_states', 'attentions
 
 
 def get_fine_tuning_trainer_args(output_path):
-
+    """
+    HuggingFace training arguments.
+    :param output_path:
+    :return: Args
+    """
     return TrainingArguments(
         output_dir=output_path + '/training/',
         logging_dir=output_path + '/logs/',
@@ -42,8 +46,12 @@ def get_fine_tuning_trainer_args(output_path):
         gradient_accumulation_steps=4,
     )
 
-def build_metrics():
 
+def build_metrics():
+    """
+    HuggingFace metrics builder for performing the given metric duing training.
+    :return:
+    """
     metric_combined = ["accuracy", "precision", "recall", "f1"]
     metric_collector = []
 
@@ -67,6 +75,11 @@ def build_metrics():
 
 
 def collate_fn(batch):
+    """
+    Collate function for HuggingFace models
+    :param batch:
+    :return:
+    """
     return {
         'pixel_values': torch.stack([x['pixel_values'] for x in batch]),
         'labels': torch.tensor([x['label'] for x in batch])
@@ -74,6 +87,12 @@ def collate_fn(batch):
 
 
 def startTraining(model_name, distributed_training=False):
+    """
+    Perform model training. Note: For distributed training, need multi-core GPU support.
+    :param model_name:
+    :param distributed_training:
+    :return:
+    """
     train_dataset = load_dataset('cifar10', split=f"train[:25%]", verification_mode='no_checks',
                                  cache_dir=dataset_path+'/train')
 
@@ -94,6 +113,10 @@ def startTraining(model_name, distributed_training=False):
     fine_tune_args = get_fine_tuning_trainer_args(f"results/{model_name}")
 
     def trainer():
+        """
+        Performs the model training.
+        :return:
+        """
         fine_tune_trainer = Trainer(
             model=pretrained_model,
             args=fine_tune_args,
@@ -140,6 +163,11 @@ def startTraining(model_name, distributed_training=False):
 
 
 def count_parameters(model):
+    """
+    To collect the model parameters and size
+    :param model:
+    :return:
+    """
     pretrained_model = AutoModelForImageClassification.from_pretrained(model, cache_dir='models/')
     params = pretrained_model.num_parameters()
     size = 0
