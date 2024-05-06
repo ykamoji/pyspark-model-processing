@@ -76,7 +76,7 @@ inference_params = {
 
 def perform_profiling():
 
-    test_dataloader = DataLoader(test_dataset[1], batch_size=1, collate_fn=collate_text_fn)
+    test_dataloader = DataLoader(test_dataset[:2], batch_size=1, collate_fn=collate_text_fn)
     input = next(iter(test_dataloader))
 
     for model_name in ["microsoft/MiniLM-L12-H384-uncased", "huawei-noah/TinyBERT_General_4L_312D"]:
@@ -84,7 +84,7 @@ def perform_profiling():
             with torch.autograd.profiler.profile(use_cuda=False) as prof:
                 model = AutoModelForSequenceClassification.from_pretrained(model_name, cache_dir='models/')
                 model.to(torch.device(env))
-                input = {key: val.to(device) for key, val in input.items() if key != 'labels'}
+                input = {key: val.to(env) for key, val in input.items() if key != 'labels'}
                 model(**input)
             print(prof.key_averages().table(sort_by='self_cpu_time_total', row_limit=5))
 
@@ -110,6 +110,6 @@ if __name__ == "__main__":
 
     spark.stop()
 
-    # perform_profiling()
+    perform_profiling()
 
 

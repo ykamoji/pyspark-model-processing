@@ -11,7 +11,6 @@ from torch.utils.data import Dataset
 
 dataset_path = os.getcwd() + "/HateSpeechDataset.csv"
 
-
 def get_fine_tuning_trainer_args(output_path):
     return TrainingArguments(
         output_dir=output_path + '/training/',
@@ -102,7 +101,7 @@ def startTraining(model_name):
     test_inputs, test_labels = preprocess(test_data, tokenizer)
 
     model = AutoModelForSequenceClassification.from_pretrained(model_name, cache_dir='models/')
-    args = get_fine_tuning_trainer_args(f"/results/{model_name}")
+    args = get_fine_tuning_trainer_args(f"results/{model_name}")
     
     class CustomDataset(Dataset):
         def __init__(self, encodings, labels):
@@ -129,7 +128,7 @@ def startTraining(model_name):
     )
 
     train_result = trainer.train()
-    trainer.save_model(f'/results/{model_name}/model')
+    trainer.save_model(f'results/{model_name}/model')
     trainer.log_metrics("train", train_result.metrics)
     trainer.save_metrics("train", train_result.metrics)
     trainer.save_state()
