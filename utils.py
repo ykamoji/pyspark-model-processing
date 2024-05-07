@@ -1,3 +1,6 @@
+import os
+import requests
+import tarfile
 import pickle
 import torch
 import pandas as pd
@@ -57,6 +60,22 @@ model_details = {
     "facebook/deit-tiny-distilled-patch16-224": {"params": 5.911, "size": 22.548},
     "facebook/deit-base-distilled-patch16-224": {"params": 87.338, "size": 333.169},
 }
+
+
+def download_dataset():
+    """
+    Downloads the CIFAR10 dataset used for inference and streaming
+    :return:
+    """
+    if not os.path.exists(os.getcwd() + '/cifar-10-batches-py/'):
+        print(f"Downloading CIFAR10 ...")
+        r = requests.get("https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz", allow_redirects=True)
+        print(f"Download complete !")
+        print(f"Extracting ...")
+        open('cifar-10-python.tar.gz', 'wb').write(r.content)
+        file = tarfile.open('cifar-10-python.tar.gz')
+        file.extractall(os.getcwd())
+        file.close()
 
 
 def createImageDataSet(dataset_path):

@@ -5,13 +5,10 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import lit
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, FloatType
 from transformers import AutoModelForImageClassification, AutoImageProcessor
-from utils import createImageDataSet, collate_image_fn
+from utils import createImageDataSet, collate_image_fn, download_dataset
 from torch.utils.data import DataLoader
 
-## To download the CIFAR10 dataset, run below two commands
-# !wget -c https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
-# !tar -xvzf cifar-10-python.tar.gz
-# Update the below path after downloading the files
+
 dataset_path = os.getcwd() + '/cifar-10-batches-py/'
 
 
@@ -25,6 +22,8 @@ schema = StructType([
 ])
 
 col_labels = ["model","duration","total_images","batch_size","average_batch_duration","balanced_accuracy"]
+
+download_dataset()
 
 train_dataset, test_dataset, label_map = createImageDataSet(dataset_path)
 
@@ -152,18 +151,18 @@ def startInference(spark, model_name, device, total_images, batch_size):
     return df
 
 
-common_params = [{"total_texts": 200, "batch_size": i} for i in [1, 2, 5, 7, 10, 20, 30, 40]]
+common_params = [{"total_images": 200, "batch_size": i} for i in [1, 2, 5, 7]]
 
-# common_params = [{"total_texts": 200, "batch_size": 20} for i in
+# common_params = [{"total_images": 200, "batch_size": 20} for i in
 #                  [20, 40, 80, 100, 120, 160, 200, 300, 400, 500, 700, 1000, 2000, 3000, 4000, 5000, 7000, 1000]]
 
 inference_params = {
     "aaraki/vit-base-patch16-224-in21k-finetuned-cifar10":common_params,
-    "tzhao3/DeiT-CIFAR10": common_params,
-    "ahsanjavid/convnext-tiny-finetuned-cifar10":common_params,
-    "results/facebook/deit-tiny-patch16-224/models":common_params,
-    "results/facebook/deit-tiny-distilled-patch16-224/models":common_params,
-    "results/facebook/convnextv2-tiny-22k-224/models":common_params
+    # "tzhao3/DeiT-CIFAR10": common_params,
+    # "ahsanjavid/convnext-tiny-finetuned-cifar10":common_params,
+    # "results/facebook/deit-tiny-patch16-224/models":common_params,
+    # "results/facebook/deit-tiny-distilled-patch16-224/models":common_params,
+    # "results/facebook/convnextv2-tiny-22k-224/models":common_params
 }
 
 
@@ -206,7 +205,7 @@ def perform_profiling():
     """
 
     for model_name in ["aaraki/vit-base-patch16-224-in21k-finetuned-cifar10", "ahsanjavid/convnext-tiny-finetuned-cifar10"]:
-        for env in ["mps", "cpu"]:
+        for env in ["cpu"]: # Add "cuda" or "mps" if available
             with torch.autograd.profiler.profile(use_cuda=False) as prof:
                 processor = AutoImageProcessor.from_pretrained(model_name, cache_dir='models/')
                 model = AutoModelForImageClassification.from_pretrained(model_name, cache_dir='models/')

@@ -5,12 +5,11 @@ import random
 import time
 import json
 from pyspark.sql import SparkSession
-from utils import createImageDataSet, streaming_schema
+from utils import createImageDataSet, streaming_schema, download_dataset
 
-## To download the CIFAR10 dataset, run below two commands
-# !wget -c https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
-# !tar -xvzf cifar-10-python.tar.gz
-# Update the below path after downloading the files
+
+download_dataset()
+
 dataset_path = os.getcwd() + '/cifar-10-batches-py/'
 
 output_path = 'streams/input/'

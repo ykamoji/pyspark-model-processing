@@ -2,19 +2,17 @@ import os
 from transformers import AutoProcessor, AutoModelForImageClassification
 import torch
 import numpy as np
-from utils import get_label_map, select_cast
+from utils import get_label_map, select_cast, download_dataset
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as F
 from pyspark.sql.types import *
 import time
 
-## To download the CIFAR10 dataset, run below two commands
-# !wget -c https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
-# !tar -xvzf cifar-10-python.tar.gz
-# Update the below path after downloading the files
 dataset_path = os.getcwd() + '/cifar-10-batches-py/'
 
 tracker_path = 'logs/tracker.json'
+
+download_dataset()
 
 label_map = get_label_map(dataset_path)
 
@@ -172,4 +170,5 @@ def start_streaming():
 
 
 if __name__ == '__main__':
+
     start_streaming()

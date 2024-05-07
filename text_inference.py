@@ -80,7 +80,7 @@ def perform_profiling():
     input = next(iter(test_dataloader))
 
     for model_name in ["microsoft/MiniLM-L12-H384-uncased", "huawei-noah/TinyBERT_General_4L_312D"]:
-        for env in ["mps", "cpu"]:
+        for env in ["cpu"]: # Add "cuda" or "mps" if available
             with torch.autograd.profiler.profile(use_cuda=False) as prof:
                 model = AutoModelForSequenceClassification.from_pretrained(model_name, cache_dir='models/')
                 model.to(torch.device(env))

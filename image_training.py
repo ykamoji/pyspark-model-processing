@@ -93,10 +93,10 @@ def startTraining(model_name, distributed_training=False):
     :param distributed_training:
     :return:
     """
-    train_dataset = load_dataset('cifar10', split=f"train[:25%]", verification_mode='no_checks',
+    train_dataset = load_dataset('cifar10', split=f"train[:100]", verification_mode='no_checks',
                                  cache_dir=dataset_path+'/train')
 
-    test_dataset = load_dataset('cifar10', split=f"test[:100%]", verification_mode='no_checks',
+    test_dataset = load_dataset('cifar10', split=f"test[:100]", verification_mode='no_checks',
                                 cache_dir=dataset_path+'/test')
 
     pretrained_model = AutoModelForImageClassification.from_pretrained(model_name, cache_dir='models/')
