@@ -1,3 +1,7 @@
+#### Presentation
+
+[![YouTube](https://img.icons8.com/color/48/000000/youtube-play.png)](https://www.youtube.com/watch?v=9Ci2IgmzzhA)
+
 #### Requirements
 ```angular2html
 torch==2.2.0
